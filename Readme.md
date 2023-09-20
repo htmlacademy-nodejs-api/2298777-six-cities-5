@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
-* Студент: [Юрий  Дзюба](https://up.htmlacademy.ru/nodejs-api/5/user/2298777).
-* Наставник: `Неизвестно`.
+* Студент: [Юрий Дзюба](https://up.htmlacademy.ru/nodejs-api/5/user/2298777).
+* Наставник: [Евгений Наумов](https://htmlacademy.ru/profile/naumov_evg).
 
 ---
 
