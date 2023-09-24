@@ -6,7 +6,7 @@ export type User = {
   isPro: boolean;
 }
 
-export type Order = {
+export type Rent = {
   title: string;
   description: string;
   date: string | Date;
