@@ -1,0 +1,82 @@
+{
+  "api": {
+    "titles": [
+      "comfort room",
+      "comfort lounge",
+      "comfort house",
+      "comfort tent",
+      "comfort basement"
+    ],
+    "descriptions": [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur quis nulla sed mi tincidunt congue pretium id lectus. Pellentesque egestas iaculis diam, vel dignissim neque pulvinar id. Phasellus mattis mi massa, eu volutpat augue rutrum sed. Vestibulum tincidunt sapien convallis, vulputate augue a, ultricies risus. Fusce vestibulum, neque cursus tincidunt vehicula, neque purus rutrum dui, at egestas leo sapien nec quam. Nullam eleifend placerat tristique. Phasellus quis lacus in ex vulputate bibendum eu quis felis. Phasellus eget accumsan mi. Etiam congue turpis quis ante lobortis, quis elementum leo condimentum. Etiam facilisis augue mauris, sit amet iaculis turpis efficitur hendrerit. Donec egestas pellentesque odio, eget congue leo semper et. Integer lacus urna, ultricies id ipsum gravida, mollis sagittis magna. In sit amet fermentum elit. Nam venenatis pellentesque lorem in suscipit.",
+      "Mauris et feugiat justo, ut vulputate orci. Nulla facilisi. Quisque sed quam at dolor congue congue sit amet imperdiet metus. Vestibulum vel blandit est. Sed dictum nisi ornare ex bibendum, eget euismod ex efficitur. Aliquam ac augue dignissim nunc faucibus tempus. Pellentesque dolor ante, dignissim ut pellentesque vel, lacinia non metus. Donec luctus dignissim erat in sodales.",
+      "Quisque velit turpis, convallis a accumsan non, ultrices nec ipsum. Suspendisse sit amet aliquam erat. Ut mollis diam a justo sollicitudin, vel rutrum nunc venenatis. Fusce placerat nulla urna, et faucibus turpis ultrices eget. Aliquam imperdiet laoreet magna id luctus. In velit velit, accumsan tincidunt dapibus vel, vehicula et elit. Duis ac nisl vitae turpis tempor gravida eget eu arcu. Duis faucibus ex sit amet urna vestibulum congue condimentum eleifend purus. Morbi tempus felis massa, ac varius nisl egestas sit amet. Vestibulum gravida hendrerit massa ac consequat. Ut massa massa, pulvinar placerat turpis sit amet, pulvinar placerat nunc. Duis at pulvinar erat. Nunc in lorem tortor.",
+      "Phasellus non lobortis nunc. Morbi augue orci, dictum venenatis mollis id, cursus quis turpis. Aenean ac cursus neque. Sed ultricies ante dolor, non suscipit ligula mattis et. Nunc vestibulum diam nec est pretium elementum. Aliquam erat volutpat. Quisque bibendum velit lacus, et lacinia lorem egestas ut. Fusce tincidunt non tortor at suscipit. Quisque lobortis laoreet pulvinar. In rutrum ipsum in risus mollis tempor. Quisque vitae velit in tortor ultricies malesuada vitae at urna. Aliquam convallis ex sed nulla condimentum posuere.",
+      "Curabitur ultricies consectetur quam, at feugiat arcu. Vivamus viverra sapien metus, non rutrum nibh sodales at. Nulla felis mauris, vestibulum at odio eget, sagittis cursus sem. Nunc pulvinar massa nec dolor lobortis dictum. Phasellus efficitur euismod pellentesque. Nullam vel risus ac erat porta interdum. Suspendisse tincidunt, elit at vehicula sagittis, sapien urna semper massa, quis feugiat felis est eu nisi. Aliquam luctus fringilla placerat."
+    ],
+    "cities": [
+      "Paris",
+      "Cologne",
+      "Brussels",
+      "Amsterdam",
+      "Hamburg",
+      "Dusseldorf"
+    ],
+    "images": [
+      "room.jpg",
+      "apartment-01.jpg",
+      "apartment-02.jpg",
+      "apartment-03.jpg",
+      "studio-01.jpg"
+    ],
+    "types": [
+      "room",
+      "apartment",
+      "house",
+      "hotel"
+    ],
+    "goods": [
+      "Breakfast",
+      "Air conditioning",
+      "Laptop friendly workspace",
+      "Baby seat",
+      "Washer",
+      "Towels",
+      "Fridge"
+    ],
+    "authors": {
+      "names": [
+        "Oleg",
+        "Bogdan",
+        "Nas",
+        "Badik",
+        "Alex"
+      ],
+      "emails": [
+        "Oleg@gmail.com",
+        "Bogdan@gmail.com",
+        "Nas@gmail.com",
+        "Badik@gmail.com",
+        "Alex@gmail.com"
+      ],
+      "avatars": [
+        "avatar-max.jpg",
+        "avatar-angelina.jpg"
+      ],
+      "passwords": [
+        "OlegXXX",
+        "Bogdax",
+        "Nasfdfsd",
+        "Bsdfds",
+        "fsdfm"
+      ]
+    },
+    "locations": [
+      "48.85500 2.351600",
+      "50.85500 3.351600",
+      "41.85500 4.351600",
+      "42.85500 2.351600",
+      "46.85500 1.351600"
+    ]
+  }
+}
