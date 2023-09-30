@@ -1,13 +1,9 @@
-import { RestApplication } from './rest/index.js';
-import { RestConfig } from './shared/libs/config/index.js';
-import { PinoLoger } from './shared/libs/loger/index.js';
+import { Container } from './rest/index.js';
 
-const bootstrap = () => {
-  const loger = new PinoLoger();
-  const config = new RestConfig(loger);
+const bootstrap = async () => {
+  const container = new Container();
 
-  const restApplication = new RestApplication(loger, config);
-
+  const restApplication = container.get('RestApplication');
   restApplication.init();
 };
 
