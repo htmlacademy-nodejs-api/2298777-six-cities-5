@@ -1,5 +1,5 @@
 import { RentGenerator } from './rent-generator.interface.js';
-import { MockServerData } from '../../types/mock-server-data.js';
+import { MockServerData } from '../../types/mock-server-data.type.js';
 import { getRandomNumber, getRandomItem, getRandomItems } from '../../helpers/index.js';
 import { getRandomDate } from '../../helpers/random.js';
 

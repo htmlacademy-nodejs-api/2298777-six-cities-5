@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { MockServerData } from '../../shared/types/mock-server-data.js';
+import { MockServerData } from '../../shared/types/mock-server-data.type.js';
 import { Command } from './command.interface.js';
 import got from 'got';
 import { TSVRentGenerator } from '../../shared/libs/rent-generator/rent-generator.js';
