@@ -49,6 +49,7 @@
     "mongoose": "7.5.3",
     "pino": "8.15.1",
     "reflect-metadata": "0.1.13",
+    "ts-retry": "4.2.3",
     "tslib": "2.6.2"
   }
 }

@@ -9,8 +9,9 @@ export type RestSchema = {
   DB_HOST: string;
   DB_USERNAME: string;
   DB_PASSWORD: string;
-  DB_PORT: string;
+  DB_PORT: number;
   DB_NAME: string;
+  DB_RETRY_ATTEMPTS: number;
 }
 
 export const configRestSchema = convict<RestSchema>({
@@ -48,12 +49,18 @@ export const configRestSchema = convict<RestSchema>({
     doc: 'Port to connect to the db',
     format: 'port',
     env: 'DB_PORT',
-    default: '27017',
+    default: 27017,
   },
   DB_NAME: {
     doc: 'Db name',
     format: String,
     env: 'DB_NAME',
-    default: 'six-cities'
+    default: 'six-cities',
   },
+  DB_RETRY_ATTEMPTS: {
+    doc: 'How many attempts will be made',
+    format: Number,
+    env: 'DB_RETRY_ATTEMPTS',
+    default: 5,
+  }
 });
