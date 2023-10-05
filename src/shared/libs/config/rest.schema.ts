@@ -12,6 +12,7 @@ export type RestSchema = {
   DB_PORT: number;
   DB_NAME: string;
   DB_RETRY_ATTEMPTS: number;
+  DB_RETRY_DELAY: number;
 }
 
 export const configRestSchema = convict<RestSchema>({
@@ -62,5 +63,11 @@ export const configRestSchema = convict<RestSchema>({
     format: Number,
     env: 'DB_RETRY_ATTEMPTS',
     default: 5,
+  },
+  DB_RETRY_DELAY: {
+    doc: 'Delay in milliseconds between connection attempts',
+    format: Number,
+    env: 'DB_RETRY_DELAY',
+    default: 1000,
   }
 });

@@ -4,7 +4,6 @@ import { DbClient } from './index.js';
 import { Logger } from '../logger/index.js';
 import { Component } from '../../types/index.js';
 import { Config, RestSchema } from '../config/index.js';
-//import { setTimeout } from 'node:timers/promises';
 import { retryAsync } from 'ts-retry';
 
 @injectable()
@@ -32,12 +31,11 @@ export class MongoDBClient implements DbClient {
 
     this.logger.info('Trying to connect to database');
 
-    const maxAttempts = this.config.get('DB_RETRY_ATTEMPTS');
 
     this.mongoose = await retryAsync(async () => Mongoose.connect(uri), {
-      maxTry: maxAttempts,
+      maxTry: this.config.get('DB_RETRY_ATTEMPTS'),
       onError: (err) => this.logger.error('Failed connecting to db', err as Error),
-      delay: 1000,
+      delay: this.config.get('DB_RETRY_DELAY'),
     });
 
     this.isConnected = true;
