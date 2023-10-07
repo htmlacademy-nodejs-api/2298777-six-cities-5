@@ -1,2 +1,2 @@
-export * from './rent.model.js';
 export * from './rent.entity.js';
+export * from './dto/create-rent.dto.js';
