@@ -1,5 +1,5 @@
-import { Comment, User } from '../../types/index.js';
-import { prop, getModelForClass, defaultClasses, modelOptions } from '@typegoose/typegoose';
+import { prop, getModelForClass, defaultClasses, modelOptions, Ref } from '@typegoose/typegoose';
+import { UserEntity } from '../user/index.js';
 
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -11,7 +11,7 @@ export interface CommentEntity extends defaultClasses.Base {}
   }
 })
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export class CommentEntity extends defaultClasses.TimeStamps implements Comment {
+export class CommentEntity extends defaultClasses.TimeStamps {
   @prop({required: true, minlength: 5})
   public comment: string;
 
@@ -21,8 +21,17 @@ export class CommentEntity extends defaultClasses.TimeStamps implements Comment 
   @prop({required: true, min: 1, max: 5})
   public rating: number;
 
-  @prop({required: true})
-  public author: User;
+  @prop({required: true, ref: UserEntity})
+  public author: Ref<UserEntity>;
+
+  public constructor(data: CommentEntity) {
+    super();
+
+    this.comment = data.comment;
+    this.date = data.date;
+    this.rating = data.rating;
+    this.author = data.author;
+  }
 }
 
 export const CommentModel = getModelForClass(CommentEntity);

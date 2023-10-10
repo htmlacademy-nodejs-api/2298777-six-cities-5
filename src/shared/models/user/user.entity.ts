@@ -10,7 +10,7 @@ export interface UserEntity extends defaultClasses.Base {}
   collection: 'users',
 }})
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export class UserEntity extends defaultClasses.TimeStamps implements User {
+export class UserEntity extends defaultClasses.TimeStamps implements User{
   @prop({required: false, default: ''})
   public name: string;
 
@@ -21,7 +21,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   public avatar: string;
 
   @prop({required: true, minlength: 5})
-  private _password: string;
+  private _password?: string;
 
   @prop({required: false, default: false})
   public isPro: boolean;
@@ -29,11 +29,14 @@ export class UserEntity extends defaultClasses.TimeStamps implements User {
   constructor(data: User) {
     super();
 
-    Object.assign(this, data);
+    this.name = data.name;
+    this.email = data.email;
+    this.avatar = data.avatar;
+    this.isPro = data.isPro;
   }
 
   public setPassword(line: string, salt: string) {
-    return createSHA256(line, salt);
+    this._password = createSHA256(line, salt);
   }
 
   public get password() {

@@ -1,5 +1,5 @@
-import { Rent, User } from '../../types/index.js';
-import { defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
+import { Ref, defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
+import { UserEntity } from '../user/user.entity.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface RentEntity extends defaultClasses.Base {}
@@ -8,11 +8,11 @@ export interface RentEntity extends defaultClasses.Base {}
   collection: 'rents'
 }})
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
-export class RentEntity extends defaultClasses.TimeStamps implements Rent {
-  @prop({required: true, minlength: 5, maxlength: 100})
+export class RentEntity extends defaultClasses.TimeStamps {
+  @prop({required: true, minlength: 5, maxlength: 100, trim: true})
   public title: string;
 
-  @prop({required: true, minlength: 5, maxlength: 3000})
+  @prop({required: true, minlength: 5, maxlength: 3000, trim: true})
   public description: string;
 
   @prop({required: false, default: new Date()})
@@ -51,14 +51,34 @@ export class RentEntity extends defaultClasses.TimeStamps implements Rent {
   @prop()
   public goods: string[];
 
-  @prop({required: true})
-  public author: User;
+  @prop({ref: UserEntity, required: true})
+  public author: Ref<UserEntity>;
 
   @prop({required: true})
   public location: {
     latitude: number;
     longitude: number;
   };
+
+  public constructor(data: RentEntity) {
+    super();
+
+    this.title = data.title;
+    this.description = data.description;
+    this.date = data.date;
+    this.city = data.city;
+    this.preview = data.preview;
+    this.images = data.images;
+    this.isPremium = data.isPremium;
+    this.isFavorite = data.isFavorite;
+    this.rating = data.rating;
+    this.type = data.type;
+    this.bedrooms = data.bedrooms;
+    this.maxAdults = data.maxAdults;
+    this.goods = data.goods;
+    this.author = data.author;
+    this.location = data.location;
+  }
 }
 
 export const RentModel = getModelForClass(RentEntity);

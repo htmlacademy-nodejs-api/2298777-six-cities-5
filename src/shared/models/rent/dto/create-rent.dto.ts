@@ -13,6 +13,7 @@ export class CreateRentDto {
   maxAdults: number;
   price: number;
   goods: string[];
+  authorId: string;
   location: {
     latitude: number;
     longitude: number;
