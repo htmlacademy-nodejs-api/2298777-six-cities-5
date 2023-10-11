@@ -22,7 +22,7 @@ export class CommentEntity extends defaultClasses.TimeStamps {
   public rating: number;
 
   @prop({required: true, ref: UserEntity})
-  public author: Ref<UserEntity>;
+  public authorId: Ref<UserEntity>;
 
   public constructor(data: CommentEntity) {
     super();
@@ -30,7 +30,7 @@ export class CommentEntity extends defaultClasses.TimeStamps {
     this.comment = data.comment;
     this.date = data.date;
     this.rating = data.rating;
-    this.author = data.author;
+    this.authorId = data.authorId;
   }
 }
 

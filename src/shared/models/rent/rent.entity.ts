@@ -53,7 +53,7 @@ export class RentEntity extends defaultClasses.TimeStamps {
   public goods: string[];
 
   @prop({ref: UserEntity, required: true})
-  public author: Ref<UserEntity>;
+  public authorId: Ref<UserEntity>;
 
   @prop({required: true})
   public location: {
@@ -62,8 +62,10 @@ export class RentEntity extends defaultClasses.TimeStamps {
   };
 
   @prop({required: true, default: [], ref: CommentEntity})
-  public comments: Ref<CommentEntity>[];
+  public commentsIds: Ref<CommentEntity>[];
 
+  @prop({default: 0})
+  public commentsCount: number;
 
   public constructor(data: RentEntity) {
     super();
@@ -81,9 +83,9 @@ export class RentEntity extends defaultClasses.TimeStamps {
     this.bedrooms = data.bedrooms;
     this.maxAdults = data.maxAdults;
     this.goods = data.goods;
-    this.author = data.author;
+    this.authorId = data.authorId;
     this.location = data.location;
-    this.comments = data.comments;
+    this.commentsIds = data.commentsIds;
   }
 }
 
