@@ -1,7 +1,7 @@
-import { Container } from './rest/index.js';
+import { MainContainer } from './rest/index.js';
 
 const bootstrap = async () => {
-  const container = new Container();
+  const container = new MainContainer();
 
   const restApplication = container.get('RestApplication');
   restApplication.init();
