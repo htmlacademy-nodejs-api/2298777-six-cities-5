@@ -14,7 +14,7 @@ export class CreateRentDto {
   price: number;
   goods: string[];
   authorId: string;
-  commentsIds: number[];
+  commentsIds: string[];
   commentsCount: number;
   location: {
     latitude: number;

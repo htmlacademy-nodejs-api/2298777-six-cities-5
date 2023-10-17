@@ -1,0 +1,450 @@
+openapi: 3.0.3
+info:
+  title: Six sities api
+  description: |-
+    * buss
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit/
+  version: 1.0.0
+tags:
+  - name: rents
+    description: Действия с арендой
+  - name: users
+    description: Действия с пользователями
+  - name: comments
+    description: Действия с комментариями
+
+paths:
+  /rents:
+    get:
+      tags:
+        - rents
+      summary: Получение списка предложений
+      description: Получение порции списка предложений. Не более 25 за раз.
+      responses:
+        "200":
+          description: Список предложений получен
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/getRents'
+    post:
+      tags:
+        - rents
+      summary: Создает предложение
+      description: Создает новое предложение.
+      requestBody:
+        description: Информация для создания предложения.
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/createRent'
+        required: true
+      responses:
+        "201":
+          description: Предложение успешно созданно.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/getRent'
+
+  /rents/{rentId}:
+    get:
+      tags:
+        - rents
+      summary: Получение объявления
+      description: Получение детальной информации по указанному предложение.
+      responses:
+        "200":
+          description: Объявление успешно полученно.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/getRent'
+      parameters:
+        - in: path
+          name: rentId
+          required: true
+          schema:
+            type: string
+
+    patch:
+      tags:
+        - rents
+      summary: Обновляет предложение
+      description:  Обновляет одно или несколько полей в указанном предложение.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/createRent'
+        required: true
+      responses:
+        "204":
+          description: Предложение успешно обновленно.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/getRent'
+      parameters:
+        - in: path
+          name: rentId
+          required: true
+          schema:
+            type: string
+
+    delete:
+      tags:
+        - rents
+      summary: Удаляет предложение
+      description: Удаляет указанное предложение.
+      responses:
+        "204":
+          description: Предложение успешно удалено.
+      parameters:
+        - in: path
+          name: rentId
+          required: true
+          schema:
+            type: string
+
+  /users/{userId}:
+    get:
+      tags:
+        - users
+      summary: Получение пользователя
+      description: Получение указанного пользователя
+      responses:
+        "200":
+          description: Информация о пользователе успешно получена.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/getUser'
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+
+  /users:
+    post:
+      tags:
+        - users
+      summary: Создание пользователя
+      description: Создание нового пользователя.
+
+      requestBody:
+        description: Информация для создания пользователя.
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/createUser'
+        required: true
+
+      responses:
+        "201":
+          description: Пользователь успешно создан.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/getUser'
+        "409":
+          description: Пользователь с таким email уже сушествует.
+
+  /comments/{rentId}:
+    get:
+      tags:
+        - comments
+      summary: Полученние списка комментариев
+      description: Полученние списка комментариев для указаного объявления.
+      responses:
+        "200":
+          description: Список комментариев успешно получен.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/getComments'
+      parameters:
+        - in: path
+          name: rentId
+          required: true
+          schema:
+            type: string
+
+    post:
+      tags:
+        - comments
+      summary: Создание комментария
+      description: Добавление нового комментария для указаного объявления.
+      requestBody:
+        description: Информация для создания комментария
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/getComments'
+        required: true
+      responses:
+        "201":
+          description: Комментарий успешно создан.
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/createComment'
+      parameters:
+        - in: path
+          name: rentId
+          required: true
+          schema:
+            type: string
+
+components:
+  schemas:
+    getRent:
+      type: object
+      properties:
+
+        title:
+          type: string
+          example: comfort room
+
+        description:
+          type: string
+          example: blablabla blablabla blablabla
+
+        date:
+          type: string
+          example: 2000-10-31T01:30:00.000-05:00
+
+        city:
+          type: string
+          example: paris
+
+        preview:
+          type: string
+          example: default.jpg
+
+        images:
+          type: array
+          items:
+            type:
+              string
+          example:
+            - default1.jpg
+            - default2.jpg
+            - default3.jpg
+
+        isPremium:
+          type: boolean
+
+        isFavorite:
+          type: boolean
+
+        rating:
+          type: integer
+          example: 5
+
+        type:
+          type: string
+          example: room
+
+        bedrooms:
+          type: integer
+          example: 2
+
+        maxAdult:
+          type: integer
+          example: 4
+
+        price:
+          type: integer
+          example: 1000
+
+        goods:
+          type: array
+          items:
+            type: string
+          example:
+            - tv
+            - wi-fi
+            - freezer
+            - shower
+
+        author:
+          $ref: '#components/schemas/getUser'
+
+        comments:
+          $ref: '#components/schemas/getComments'
+
+        location:
+          type: object
+          properties:
+            latitude:
+              type: integer
+              example: 48.864716
+            longitude:
+              type: integer
+              example: 2.349014
+
+    getUser:
+      type: object
+      properties:
+        name:
+          type: string
+          example: bob
+        email:
+          type: string
+          example: bob@gmail.com
+        avatar:
+          type: string
+          example: default-avatar.jpg
+        isPro:
+          type: boolean
+
+    createUser:
+      type: object
+      properties:
+        name:
+          type: string
+          example: bob
+        email:
+          type: string
+          example: bob@gmail.com
+        avatar:
+          type: string
+          example: default-avatar.jpg
+        isPro:
+          type: boolean
+        password:
+          type: string
+          example: secret
+
+    getComments:
+      type: array
+      items:
+        type: object
+        properties:
+          comment:
+            type: string
+          date:
+            type: string
+          rating:
+            type: integer
+          author:
+            type: object
+      example:
+        - comment: blablabla
+          date: 2000-10-31T01:30:00.000-05:00
+          rating: 4
+          author:
+            name: bob
+            email: bob@gmail.com
+            avatar: default-avatar.jpg
+            isPro: true
+
+
+    createComment:
+      type: object
+      properties:
+        comment:
+          type: string
+          example: blablabla blablabla
+        date:
+          type: string
+          example: 2000-10-31T01:30:00.000-05:00
+        rating:
+          type: integer
+          example: 3
+        author:
+          $ref: '#components/schemas/getUser'
+
+    createRent:
+      type: object
+      properties:
+
+        title:
+          type: string
+          example: comfort room
+
+        description:
+          type: string
+          example: blablabla blablabla blablabla
+
+        date:
+          type: string
+          example: 2000-10-31T01:30:00.000-05:00
+
+        city:
+          type: string
+          example: paris
+
+        preview:
+          type: string
+          example: default.jpg
+
+        images:
+          type: array
+          items:
+            type:
+              string
+          example:
+            - default1.jpg
+            - default2.jpg
+            - default3.jpg
+
+        isPremium:
+          type: boolean
+
+        rating:
+          type: integer
+          example: 5
+
+        type:
+          type: string
+          example: room
+
+        bedrooms:
+          type: integer
+          example: 2
+
+        maxAdult:
+          type: integer
+          example: 4
+
+        price:
+          type: integer
+          example: 1000
+
+        goods:
+          type: array
+          items:
+            type: string
+          example:
+            - tv
+            - wi-fi
+            - freezer
+            - shower
+
+        authorId:
+          type: string
+          example: 54543208fuhs231
+
+        location:
+          type: object
+          properties:
+            latitude:
+              type: integer
+              example: 48.864716
+            longitude:
+              type: integer
+              example: 2.349014
+
+    getRents:
+      type: array
+      items:
+        anyOf:
+          - $ref: '#components/schemas/getRent'
+          - $ref: '#components/schemas/getRent'
+          - $ref: '#components/schemas/getRent'

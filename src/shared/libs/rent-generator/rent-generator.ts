@@ -28,12 +28,13 @@ export class TSVRentGenerator implements RentGenerator {
     const password = getRandomItem(rentData.authors.passwords);
     const isPro = Math.random() < 0.5;
     const location = getRandomItem(rentData.locations);
+    const comments = getRandomItems(rentData.comments).join('@@@');
 
 
     return [title, description, date, city,
       preview, images, isPremium, isFavorite,
       rating, type, bedrooms, maxAdults, price, goods,
-      name, email, avatar, password, isPro, location]
+      name, email, avatar, password, isPro, location, comments]
       .join('\t');
   }
 }

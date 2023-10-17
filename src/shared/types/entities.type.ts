@@ -5,6 +5,13 @@ export type User = {
   isPro: boolean;
 }
 
+export type Comment = {
+  comment: string;
+  date: string | Date;
+  rating: number;
+  author: User;
+}
+
 export type Rent = {
   title: string;
   description: string;
@@ -21,15 +28,9 @@ export type Rent = {
   price: number;
   goods: string[];
   author: User;
+  comments: Omit<Comment, 'author'>[];
   location: {
     latitude: number;
     longitude: number;
-  }
-}
-
-export type Comment = {
-  comment: string;
-  date: string | Date;
-  rating: number;
-  author: User;
+  },
 }

@@ -21,7 +21,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements User{
   public avatar: string;
 
   @prop({required: true, minlength: 5})
-  private _password?: string;
+  private password?: string;
 
   @prop({required: false, default: false})
   public isPro: boolean;
@@ -36,11 +36,11 @@ export class UserEntity extends defaultClasses.TimeStamps implements User{
   }
 
   public setPassword(line: string, salt: string) {
-    this._password = createSHA256(line, salt);
+    this.password = createSHA256(line, salt);
   }
 
-  public get password() {
-    return this._password;
+  public getPassword() {
+    return this.password;
   }
 }
 
