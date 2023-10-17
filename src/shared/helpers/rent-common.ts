@@ -2,7 +2,7 @@ import { getRandomNumber } from './random.js';
 
 export const createRent = (line: string) => {
   const [title, description, date,
-    city, preview, images, isPremium, isFavorite,
+    city, preview, images, isPremium,
     rating, type, bedrooms, maxAdults, price, goods,
     name, email, avatar, password, isPro, location, comments] = line.split('\t');
 
@@ -15,7 +15,6 @@ export const createRent = (line: string) => {
     preview,
     images: images.split('@@@').map((image) => image),
     isPremium: isPremium === 'true',
-    isFavorite: isFavorite === 'true',
     rating: Number.parseInt(rating, 10),
     type,
     bedrooms: parseInt(bedrooms, 10),

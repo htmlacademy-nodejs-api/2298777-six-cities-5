@@ -6,7 +6,6 @@ export class CreateRentDto {
   preview: string;
   images: string[];
   isPremium: boolean;
-  isFavorite: boolean;
   rating: number;
   type: string;
   bedrooms: number;

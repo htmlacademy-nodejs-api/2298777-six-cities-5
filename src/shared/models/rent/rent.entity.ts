@@ -31,9 +31,6 @@ export class RentEntity extends defaultClasses.TimeStamps {
   @prop({required: false, default: false})
   public isPremium: boolean;
 
-  @prop({required: false, default: false})
-  public isFavorite: boolean;
-
   @prop({required: true, min: 1, max: 5})
   public rating: number;
 
@@ -77,7 +74,6 @@ export class RentEntity extends defaultClasses.TimeStamps {
     this.preview = data.preview;
     this.images = data.images;
     this.isPremium = data.isPremium;
-    this.isFavorite = data.isFavorite;
     this.rating = data.rating;
     this.type = data.type;
     this.bedrooms = data.bedrooms;
