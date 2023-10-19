@@ -1,0 +1,23 @@
+tags:
+  - rents
+summary: Обновляет предложение
+description:  Обновляет одно или несколько полей в указанном предложение.
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/create-rent.yml
+  required: true
+responses:
+  "204":
+    description: Предложение успешно обновленно.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-rent.yml
+parameters:
+  - in: path
+    name: rentId
+    required: true
+    schema:
+      type: string

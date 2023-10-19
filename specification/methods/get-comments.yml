@@ -1,0 +1,17 @@
+tags:
+  - comments
+summary: Полученние списка комментариев
+description: Полученние списка комментариев для указаного объявления.
+responses:
+  "200":
+    description: Список комментариев успешно получен.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-comments.yml
+parameters:
+  - in: path
+    name: rentId
+    required: true
+    schema:
+      type: string

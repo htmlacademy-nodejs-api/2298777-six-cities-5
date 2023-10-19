@@ -1,0 +1,13 @@
+tags:
+  - rents
+summary: Удаляет предложение
+description: Удаляет указанное предложение.
+responses:
+  "204":
+    description: Предложение успешно удалено.
+parameters:
+  - in: path
+    name: rentId
+    required: true
+    schema:
+      type: string

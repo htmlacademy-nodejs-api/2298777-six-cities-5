@@ -1,0 +1,11 @@
+tags:
+  - favorites
+summary: Получение любимых предложений.
+description: Получение любимых предложений для авторизованого пользователя.
+responses:
+  "200":
+    description: Список любимых предложений успешно получен.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-rents.yml

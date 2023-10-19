@@ -1,0 +1,14 @@
+tags:
+  - auth
+summary: Проверяет аутефикацию пользователя.
+headers:
+  X-Token:
+    type: string
+    example: sdgsdfgd
+responses:
+  "200":
+    description: Аутентификация прошла успешно.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-user.yml

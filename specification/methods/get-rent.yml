@@ -1,0 +1,17 @@
+tags:
+  - rents
+summary: Получение объявления
+description: Получение детальной информации по указанному предложение.
+responses:
+  "200":
+    description: Объявление успешно полученно.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-rent.yml
+parameters:
+  - in: path
+    name: rentId
+    required: true
+    schema:
+      type: string

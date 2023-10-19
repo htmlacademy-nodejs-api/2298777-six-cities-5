@@ -1,0 +1,17 @@
+tags:
+  - login
+summary: Операция захода в закрытую часть приложения.
+requestBody:
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/login.yml
+responses:
+  "201":
+    description: Вход выполнен успешно.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-user.yml
+  "400":
+    description: Неправильный данные пользователя.

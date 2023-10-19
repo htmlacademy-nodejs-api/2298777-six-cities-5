@@ -1,0 +1,17 @@
+tags:
+  - users
+summary: Получение пользователя
+description: Получение указанного пользователя
+responses:
+  "200":
+    description: Информация о пользователе успешно получена.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-user.yml
+parameters:
+  - in: path
+    name: userId
+    required: true
+    schema:
+      type: string

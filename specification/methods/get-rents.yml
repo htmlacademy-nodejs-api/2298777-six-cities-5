@@ -1,0 +1,18 @@
+tags:
+  - rents
+summary: Получение списка предложений
+description: Получение порции списка предложений.
+responses:
+  "200":
+    description: Список предложений получен
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-rents.yml
+parameters:
+  - in: query
+    name: isPremium
+    required: false
+    schema:
+      type:
+        boolean
