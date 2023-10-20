@@ -41,45 +41,41 @@ export class ImportCommand implements Command {
     this.dbClient.disconnect();
   }
 
-  private async saveRent(rent: Rent) {
+  private async saveRent(dto: Rent) {
     const user = await this.userService.findOrCreate({
-      name: rent.author.name,
-      email: rent.author.email,
-      isPro: rent.author.isPro,
-      avatar: rent.author.avatar,
+      name: dto.author.name,
+      email: dto.author.email,
+      isPro: dto.author.isPro,
+      avatar: dto.author.avatar,
       password: Math.random().toString(36).slice(-8),
     }, this.salt);
 
-    const comments : string[] = [];
-    for (const comment of rent.comments) {
-      const currentComment = await this.commentService.create({
+    const rent = await this.rentService.create({
+      title: dto.title,
+      description: dto.description,
+      city: dto.city,
+      preview: dto.preview,
+      images: dto.images,
+      isPremium: dto.isPremium,
+      rating: dto.rating,
+      type: dto.type,
+      bedrooms: dto.bedrooms,
+      maxAdults: dto.maxAdults,
+      price: dto.price,
+      goods: dto.goods,
+      authorId: user.id,
+      commentsCount: dto.comments.length,
+      location: dto.location,
+    });
+
+    for (const comment of dto.comments) {
+      await this.commentService.create({
         comment: comment.comment,
         authorId: user.id,
         rating: comment.rating,
-        date: comment.date,
+        rentId: rent.id
       });
-      comments.push(currentComment.id);
     }
-
-    await this.rentService.create({
-      title: rent.title,
-      description: rent.description,
-      date: rent.date,
-      city: rent.city,
-      preview: rent.preview,
-      images: rent.images,
-      isPremium: rent.isPremium,
-      rating: rent.rating,
-      type: rent.type,
-      bedrooms: rent.bedrooms,
-      maxAdults: rent.maxAdults,
-      price: rent.price,
-      goods: rent.goods,
-      authorId: user.id,
-      commentsIds: comments,
-      commentsCount: comments.length,
-      location: rent.location,
-    });
   }
 
 

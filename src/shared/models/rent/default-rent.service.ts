@@ -22,12 +22,12 @@ export class DefaultRentService implements RentService {
 
   public async findById(rentId: string): Promise<DocumentType<RentEntity> | null> {
     return this.rentModel.findById(rentId)
-      .populate(['userId', 'commentsIds'])
+      .populate(['userId'])
       .exec();
   }
 
   public async find(): Promise<DocumentType<RentEntity>[]> {
-    return this.rentModel.find().populate(['userId', 'commentsIds']).exec();
+    return this.rentModel.find().populate(['userId']).exec();
   }
 
   public async deleteById(rentId: string): Promise<DocumentType<RentEntity> | null> {
@@ -35,7 +35,7 @@ export class DefaultRentService implements RentService {
   }
 
   public async updateById(rentId: string, dto: UpdateRentDto): Promise<DocumentType<RentEntity> | null> {
-    return this.rentModel.findOneAndUpdate({id: rentId}, dto).exec();
+    return this.rentModel.findOneAndUpdate({id: rentId}, dto, {new: true}).populate(['userId']).exec();
   }
 
   public async exists(rentId: string): Promise<boolean> {
@@ -47,7 +47,7 @@ export class DefaultRentService implements RentService {
       .find()
       .sort({ createdAt: Sort.Down})
       .limit(count)
-      .populate(['userId, commentsIds'])
+      .populate(['userId'])
       .exec();
   }
 
@@ -56,7 +56,7 @@ export class DefaultRentService implements RentService {
       .find()
       .sort({commentsCount: Sort.Down})
       .limit(count)
-      .populate(['userId, commentsIds'])
+      .populate(['userId'])
       .exec();
   }
 }

@@ -1,7 +1,6 @@
 export class CreateRentDto {
   title: string;
   description: string;
-  date: Date | string;
   city: string;
   preview: string;
   images: string[];
@@ -13,7 +12,6 @@ export class CreateRentDto {
   price: number;
   goods: string[];
   authorId: string;
-  commentsIds: string[];
   commentsCount: number;
   location: {
     latitude: number;

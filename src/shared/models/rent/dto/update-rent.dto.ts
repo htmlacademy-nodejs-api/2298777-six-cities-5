@@ -10,7 +10,6 @@ export class UpdateRentDto {
   maxAdults?: number;
   price?: number;
   goods?: string[];
-  commentsIds?: string[];
   commentsCount?: number;
   location?: {
     latitude: number;

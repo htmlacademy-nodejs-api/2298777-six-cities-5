@@ -1,6 +1,5 @@
 import { Ref, defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
 import { UserEntity } from '../user/user.entity.js';
-import { CommentEntity } from '../comment/comment.entity.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface RentEntity extends defaultClasses.Base {}
@@ -15,9 +14,6 @@ export class RentEntity extends defaultClasses.TimeStamps {
 
   @prop({required: true, minlength: 5, maxlength: 3000, trim: true})
   public description: string;
-
-  @prop({required: false, default: new Date()})
-  public date: string | Date;
 
   @prop({required: true})
   public city: string;
@@ -58,9 +54,6 @@ export class RentEntity extends defaultClasses.TimeStamps {
     longitude: number;
   };
 
-  @prop({required: true, default: [], ref: CommentEntity})
-  public commentsIds: Ref<CommentEntity>[];
-
   @prop({default: 0})
   public commentsCount: number;
 
@@ -69,7 +62,6 @@ export class RentEntity extends defaultClasses.TimeStamps {
 
     this.title = data.title;
     this.description = data.description;
-    this.date = data.date;
     this.city = data.city;
     this.preview = data.preview;
     this.images = data.images;
@@ -81,7 +73,6 @@ export class RentEntity extends defaultClasses.TimeStamps {
     this.goods = data.goods;
     this.authorId = data.authorId;
     this.location = data.location;
-    this.commentsIds = data.commentsIds;
   }
 }
 
