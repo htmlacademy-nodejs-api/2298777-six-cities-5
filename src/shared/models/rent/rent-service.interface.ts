@@ -13,4 +13,5 @@ export interface RentService {
   findDiscussed(count: number): Promise<DocumentType<RentEntity>[]>;
   findPremium(city: string, count: number): Promise<DocumentType<RentEntity>[]>;
   findFavorite(userId: string): Promise<DocumentType<RentEntity>[] | null>;
+  findByCity(city: string): Promise<DocumentType<RentEntity>[]>;
 }

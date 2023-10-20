@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { CreateRentDto, RentEntity, RentModel, RentService, UpdateRentDto } from './index.js';
+import { CreateRentDto, RentEntity, RentModel, RentService, UpdateRentDto, DEFAULT_RENT_COUNT } from './index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { DocumentType } from '@typegoose/typegoose';
 import { Sort, Component } from '../../types/index.js';
@@ -29,7 +29,7 @@ export class DefaultRentService implements RentService {
   }
 
   public async find(): Promise<DocumentType<RentEntity>[]> {
-    return this.rentModel.find().populate(['userId']).exec();
+    return this.rentModel.find().limit(DEFAULT_RENT_COUNT).populate(['userId']).exec();
   }
 
   public async deleteById(rentId: string): Promise<DocumentType<RentEntity> | null> {
@@ -85,6 +85,14 @@ export class DefaultRentService implements RentService {
 
     return this.rentModel
       .find({ _id: { $in: favoritesIds}})
+      .populate(['userId'])
+      .exec();
+  }
+
+  public async findByCity(city: string, count?: number): Promise<DocumentType<RentEntity>[]> {
+    return this.rentModel
+      .find({city})
+      .limit(count ?? DEFAULT_RENT_COUNT)
       .populate(['userId'])
       .exec();
   }
