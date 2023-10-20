@@ -26,8 +26,8 @@ export class ImportCommand implements Command {
     this.config = new RestConfig(this.logger);
     this.dbClient = new MongoDBClient(this.logger, this.config);
     this.userService = new DefaultUserService(this.logger, UserModel);
-    this.commentService = new DefaultCommentService(this.logger, CommentModel);
-    this.rentService = new DefaultRentService(this.logger, RentModel);
+    this.commentService = new DefaultCommentService(this.logger, CommentModel, RentModel);
+    this.rentService = new DefaultRentService(this.logger, RentModel, UserModel);
   }
 
   private async onImportedLine(line: string, resolve: () => void) {
@@ -57,14 +57,12 @@ export class ImportCommand implements Command {
       preview: dto.preview,
       images: dto.images,
       isPremium: dto.isPremium,
-      rating: dto.rating,
       type: dto.type,
       bedrooms: dto.bedrooms,
       maxAdults: dto.maxAdults,
       price: dto.price,
       goods: dto.goods,
       authorId: user.id,
-      commentsCount: dto.comments.length,
       location: dto.location,
     });
 

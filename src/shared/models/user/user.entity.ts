@@ -1,5 +1,6 @@
+import { RentEntity } from '../rent/rent.entity.js';
 import { User } from '../../types/index.js';
-import { defaultClasses, getModelForClass, prop, modelOptions } from '@typegoose/typegoose';
+import { defaultClasses, getModelForClass, prop, modelOptions, Ref } from '@typegoose/typegoose';
 import { createSHA256 } from '../../helpers/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -25,6 +26,9 @@ export class UserEntity extends defaultClasses.TimeStamps implements User{
 
   @prop({required: false, default: false})
   public isPro: boolean;
+
+  @prop({required: false, ref: () => RentEntity})
+  public readonly favoriteRentsIds: Ref<() => RentEntity>[];
 
   constructor(data: User) {
     super();

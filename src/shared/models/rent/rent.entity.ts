@@ -1,5 +1,4 @@
 import { Ref, defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
-import { UserEntity } from '../user/user.entity.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface RentEntity extends defaultClasses.Base {}
@@ -27,7 +26,7 @@ export class RentEntity extends defaultClasses.TimeStamps {
   @prop({required: false, default: false})
   public isPremium: boolean;
 
-  @prop({required: true, min: 1, max: 5})
+  @prop({required: false, min: 1, max: 5, default: 1})
   public rating: number;
 
   @prop({required: true})
@@ -45,8 +44,8 @@ export class RentEntity extends defaultClasses.TimeStamps {
   @prop()
   public goods: string[];
 
-  @prop({ref: UserEntity, required: true})
-  public authorId: Ref<UserEntity>;
+  @prop({ref: 'UserEntity', required: true})
+  public authorId: Ref<'UserEntity'>;
 
   @prop({required: true})
   public location: {
@@ -54,7 +53,7 @@ export class RentEntity extends defaultClasses.TimeStamps {
     longitude: number;
   };
 
-  @prop({default: 0})
+  @prop({default: 0, required: false})
   public commentsCount: number;
 
   public constructor(data: RentEntity) {
@@ -66,7 +65,6 @@ export class RentEntity extends defaultClasses.TimeStamps {
     this.preview = data.preview;
     this.images = data.images;
     this.isPremium = data.isPremium;
-    this.rating = data.rating;
     this.type = data.type;
     this.bedrooms = data.bedrooms;
     this.maxAdults = data.maxAdults;

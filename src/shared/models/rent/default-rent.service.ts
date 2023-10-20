@@ -3,6 +3,7 @@ import { CreateRentDto, RentEntity, RentModel, RentService, UpdateRentDto } from
 import { Logger } from '../../libs/logger/index.js';
 import { DocumentType } from '@typegoose/typegoose';
 import { Sort, Component } from '../../types/index.js';
+import { UserModel } from '../user/index.js';
 
 @injectable()
 export class DefaultRentService implements RentService {
@@ -10,6 +11,7 @@ export class DefaultRentService implements RentService {
   public constructor(
     @inject(Component.Logger) private readonly logger: Logger,
     @inject(Component.RentModel) private readonly rentModel: typeof RentModel,
+    @inject(Component.UserModel) private readonly userModel: typeof UserModel,
   ) {}
 
   public async create(dto: CreateRentDto): Promise<DocumentType<RentEntity>> {
@@ -31,11 +33,11 @@ export class DefaultRentService implements RentService {
   }
 
   public async deleteById(rentId: string): Promise<DocumentType<RentEntity> | null> {
-    return this.rentModel.findOneAndDelete({id: rentId}).exec();
+    return this.rentModel.findByIdAndDelete(rentId).exec();
   }
 
   public async updateById(rentId: string, dto: UpdateRentDto): Promise<DocumentType<RentEntity> | null> {
-    return this.rentModel.findOneAndUpdate({id: rentId}, dto, {new: true}).populate(['userId']).exec();
+    return this.rentModel.findByIdAndUpdate(rentId, dto, {new: true}).populate(['userId']).exec();
   }
 
   public async exists(rentId: string): Promise<boolean> {
@@ -56,6 +58,33 @@ export class DefaultRentService implements RentService {
       .find()
       .sort({commentsCount: Sort.Down})
       .limit(count)
+      .populate(['userId'])
+      .exec();
+  }
+
+  public async findPremium(city: string, count: number): Promise<DocumentType<RentEntity>[]> {
+    return this.rentModel
+      .find({city, isPremium: true})
+      .limit(count)
+      .populate(['userId'])
+      .exec();
+  }
+
+  public async findFavorite(userId: string): Promise<DocumentType<RentEntity>[] | null> {
+    const user = await this.userModel.findById(userId);
+
+    if (!user) {
+      return null;
+    }
+
+    const favoritesIds = user.favoriteRentsIds;
+
+    if (!favoritesIds || !favoritesIds.length) {
+      return [];
+    }
+
+    return this.rentModel
+      .find({ _id: { $in: favoritesIds}})
       .populate(['userId'])
       .exec();
   }

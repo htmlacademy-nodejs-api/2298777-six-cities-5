@@ -15,7 +15,6 @@ export class TSVRentGenerator implements RentGenerator {
     const preview = getRandomItem(rentData.images);
     const images = getRandomItems(rentData.images).join('@@@');
     const isPremium = Math.random() < 0.5;
-    const rating = getRandomNumber(1, 5);
     const type = getRandomItem(rentData.types);
     const bedrooms = getRandomNumber(1, 8);
     const maxAdults = getRandomNumber(1, 10);
@@ -32,7 +31,7 @@ export class TSVRentGenerator implements RentGenerator {
 
     return [title, description, date, city,
       preview, images, isPremium,
-      rating, type, bedrooms, maxAdults, price, goods,
+      type, bedrooms, maxAdults, price, goods,
       name, email, avatar, password, isPro, location, comments]
       .join('\t');
   }

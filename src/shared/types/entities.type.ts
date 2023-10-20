@@ -20,7 +20,6 @@ export type Rent = {
   preview: string;
   images: string[];
   isPremium: boolean;
-  rating: number;
   type: string;
   bedrooms: number;
   maxAdults: number;
