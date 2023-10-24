@@ -4,8 +4,9 @@ import { RestApplication } from '../../rest/index.js';
 import { RestSchema } from '../libs/config/index.js';
 import { DbClient } from '../libs/db-client/index.js';
 import { UserService, UserModel } from '../models/user/index.js';
-import { RentService, RentModel } from '../models/rent/index.js';
-import { CommentModel, CommentService } from '../models/comment/index.js';
+import { RentService, RentModel, RentController } from '../models/rent/index.js';
+import { CommentController, CommentModel, CommentService } from '../models/comment/index.js';
+import { UserController } from '../models/user/user.controller.js';
 
 export type ComponentType = {
   RestApplication: RestApplication,
@@ -18,4 +19,7 @@ export type ComponentType = {
   RentService: RentService,
   CommentModel: typeof CommentModel,
   CommentService: CommentService,
+  CommentController: CommentController,
+  RentController: RentController,
+  UserController: UserController,
 }

@@ -9,4 +9,7 @@ export const Component = {
   RentService: 'RentService',
   CommentModel: 'CommentModel',
   CommentService: 'CommentService',
+  CommentController: 'CommentController',
+  RentController: 'RentController',
+  UserController: 'UserController',
 } as const;

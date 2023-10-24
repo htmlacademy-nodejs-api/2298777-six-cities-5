@@ -5,6 +5,9 @@ import { Component } from '../shared/types/index.js';
 import { DbClient } from '../shared/libs/db-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
 import express, { Express } from 'express';
+import { CommentController } from '../shared/models/comment/comment.controller.js';
+import { RentController } from '../shared/models/rent/rent.controller.js';
+import { UserController } from '../shared/models/user/user.controller.js';
 
 @injectable()
 export class RestApplication {
@@ -14,6 +17,9 @@ export class RestApplication {
     @inject(Component.Logger) private readonly logger: Logger,
     @inject(Component.Config) private readonly config: Config<RestSchema>,
     @inject(Component.DBClient) private readonly dbClient: DbClient,
+    @inject(Component.CommentController) private readonly commentController: CommentController,
+    @inject(Component.RentController) private readonly rentController: RentController,
+    @inject(Component.UserController) private readonly userController: UserController,
   ) {
     this.express = express();
   }
@@ -28,8 +34,18 @@ export class RestApplication {
     ));
   }
 
+  private async initControllers() {
+    this.express.use('/comments', this.commentController.router);
+    this.express.use('/rents', this.rentController.router);
+    this.express.use('/users', this.userController.router);
+  }
+
   private async initServer() {
     this.express.listen(this.config.get('PORT'));
+  }
+
+  private async initMiddleware() {
+    this.express.use(express.json());
   }
 
   public async init() : Promise<void> {
@@ -38,6 +54,14 @@ export class RestApplication {
     this.logger.info('Init database');
     await this.initDB();
     this.logger.info('Init database completed');
+
+    this.logger.info('Init middleware');
+    await this.initMiddleware();
+    this.logger.info('Init middleware completed');
+
+    this.logger.info('Init Controllers');
+    await this.initControllers();
+    this.logger.info('Init controllers completed');
 
     this.logger.info('Init server');
     await this.initServer();
