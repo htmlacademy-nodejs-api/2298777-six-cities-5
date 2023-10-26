@@ -5,9 +5,8 @@ import { Component } from '../shared/types/index.js';
 import { DbClient } from '../shared/libs/db-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
 import express, { Express } from 'express';
-import { CommentController } from '../shared/models/comment/comment.controller.js';
-import { RentController } from '../shared/models/rent/rent.controller.js';
-import { UserController } from '../shared/models/user/user.controller.js';
+
+import { Controller } from '../shared/libs/rest/index.js';
 
 @injectable()
 export class RestApplication {
@@ -17,9 +16,9 @@ export class RestApplication {
     @inject(Component.Logger) private readonly logger: Logger,
     @inject(Component.Config) private readonly config: Config<RestSchema>,
     @inject(Component.DBClient) private readonly dbClient: DbClient,
-    @inject(Component.CommentController) private readonly commentController: CommentController,
-    @inject(Component.RentController) private readonly rentController: RentController,
-    @inject(Component.UserController) private readonly userController: UserController,
+    @inject(Component.CommentController) private readonly commentController: Controller,
+    @inject(Component.RentController) private readonly rentController: Controller,
+    @inject(Component.UserController) private readonly userController: Controller,
   ) {
     this.express = express();
   }

@@ -45,7 +45,7 @@ export class RentEntity extends defaultClasses.TimeStamps {
   public goods: string[];
 
   @prop({ref: 'UserEntity', required: true})
-  public authorId: Ref<'UserEntity'>;
+  public userId: Ref<'UserEntity'>;
 
   @prop({required: true})
   public location: {
@@ -69,7 +69,7 @@ export class RentEntity extends defaultClasses.TimeStamps {
     this.bedrooms = data.bedrooms;
     this.maxAdults = data.maxAdults;
     this.goods = data.goods;
-    this.authorId = data.authorId;
+    this.userId = data.userId;
     this.location = data.location;
   }
 }

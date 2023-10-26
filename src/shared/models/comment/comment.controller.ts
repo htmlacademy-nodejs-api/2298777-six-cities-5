@@ -8,7 +8,7 @@ import { Request, Response } from 'express';
 export class CommentController extends AbstractController {
 
   constructor(
-    @inject(Component.Logger) private readonly logger: Logger,
+    @inject(Component.Logger) protected readonly logger: Logger,
   ) {
     super(logger);
 
@@ -18,11 +18,11 @@ export class CommentController extends AbstractController {
     this.addRoute({path: '/', method: HttpMethod.Post, handler: this.create});
   }
 
-  public get(req: Request, res: Response): void {
+  public get(_req: Request, _res: Response): void {
 
   }
 
-  public create(req: Request, res: Response): void {
+  public create(_req: Request, _res: Response): void {
 
   }
 }

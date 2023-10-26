@@ -41,7 +41,8 @@ export class DefaultRentService implements RentService {
   }
 
   public async exists(rentId: string): Promise<boolean> {
-    return this.rentModel.exists({id: rentId}).exec() !== null;
+    return (await this.rentModel
+      .exists({_id: rentId})) !== null;
   }
 
   public async findNew(count: number): Promise<DocumentType<RentEntity>[]> {

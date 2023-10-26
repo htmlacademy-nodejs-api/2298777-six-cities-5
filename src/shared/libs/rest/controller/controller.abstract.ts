@@ -3,8 +3,7 @@ import { Controller } from './index.js';
 import { Route } from '../index.js';
 import { Logger } from '../../logger/index.js';
 import { StatusCodes } from 'http-status-codes';
-import { inject, injectable } from 'inversify';
-import { Component } from '../../../types/component.enum.js';
+import { injectable } from 'inversify';
 
 const DEFAULT_CONTENT_TYPE = 'application/json';
 
@@ -13,7 +12,7 @@ export abstract class AbstractController implements Controller {
   private readonly _router: Router;
 
   constructor(
-    @inject(Component.Logger) protected readonly logger: Logger
+    protected readonly logger: Logger
   ) {
     this._router = Router();
   }
