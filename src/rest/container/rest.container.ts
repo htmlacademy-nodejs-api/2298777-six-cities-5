@@ -9,6 +9,7 @@ import { MongoDBClient } from '../../shared/libs/db-client/mongo.db-client.js';
 
 export const createRestContainer = () => {
   const container = new Container();
+
   container.bind<RestApplication>(Component.RestApplication).to(RestApplication).inSingletonScope();
   container.bind<Config<RestSchema>>(Component.Config).to(RestConfig).inSingletonScope();
   container.bind<Logger>(Component.Logger).to(PinoLogger).inSingletonScope();
