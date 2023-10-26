@@ -6,7 +6,7 @@ import { DbClient } from '../shared/libs/db-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
 import express, { Express } from 'express';
 
-import { Controller } from '../shared/libs/rest/index.js';
+import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
 
 @injectable()
 export class RestApplication {
@@ -19,6 +19,7 @@ export class RestApplication {
     @inject(Component.CommentController) private readonly commentController: Controller,
     @inject(Component.RentController) private readonly rentController: Controller,
     @inject(Component.UserController) private readonly userController: Controller,
+    @inject(Component.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter,
   ) {
     this.express = express();
   }
@@ -31,6 +32,10 @@ export class RestApplication {
       this.config.get('DB_PORT'),
       this.config.get('DB_NAME')
     ));
+  }
+
+  private async initFilters() {
+    this.express.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
   }
 
   private async initControllers() {
@@ -61,6 +66,10 @@ export class RestApplication {
     this.logger.info('Init Controllers');
     await this.initControllers();
     this.logger.info('Init controllers completed');
+
+    this.logger.info('Init filters');
+    await this.initFilters();
+    this.logger.info('Init filters completed');
 
     this.logger.info('Init server');
     await this.initServer();
