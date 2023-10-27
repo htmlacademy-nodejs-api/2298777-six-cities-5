@@ -10,3 +10,7 @@ export const getProjectDirectory = () =>
 
 export const fillDTO = <T, V>(dto: ClassConstructor<T>, plainObject: V) =>
   plainToInstance(dto, plainObject, {excludeExtraneousValues: true});
+
+export const createErrorObject = (message: Error) => ({
+  error: message,
+});

@@ -23,3 +23,30 @@ Content-Type: application/json
 }
 
 ###
+
+
+# logout
+
+DELETE http://localhost:4000/login HTTP/1.1
+Content-Type: application/json
+
+###
+
+# login
+
+GET  http://localhost:4000/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "bad@lol.com",
+  "password": "bad"
+}
+
+###
+
+# auth
+
+GET http://localhost:4000/auth HTTP/1.1
+Authorization: 123
+
+###

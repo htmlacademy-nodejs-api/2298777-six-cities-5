@@ -4,6 +4,7 @@ import { Route } from '../index.js';
 import { Logger } from '../../logger/index.js';
 import { StatusCodes } from 'http-status-codes';
 import { injectable } from 'inversify';
+import asyncHandler from 'express-async-handler';
 
 const DEFAULT_CONTENT_TYPE = 'application/json';
 
@@ -22,7 +23,8 @@ export abstract class AbstractController implements Controller {
   }
 
   public addRoute(route: Route): void {
-    this._router[route.method](route.path, route.handler);
+    const wrapperAsyncHandler = asyncHandler(route.handler.bind(this));
+    this._router[route.method](route.path, wrapperAsyncHandler);
     this.logger.info(`Route registered ${route.method} at ${route.path}`);
   }
 

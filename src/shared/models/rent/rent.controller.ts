@@ -7,6 +7,7 @@ import { CreateRentDto, RentService } from './index.js';
 import { fillDTO } from '../../helpers/common.js';
 import { RentRdo } from './rdo/rent.rdo.js';
 import { StatusCodes } from 'http-status-codes';
+import { HttpError } from '../../libs/rest/index.js';
 
 @injectable()
 export class RentController extends AbstractController {
@@ -46,9 +47,7 @@ export class RentController extends AbstractController {
 
   public async getDetailed({path}: Request<Record<string, unknown>, Record<string, unknown>, CreateRentDto>, res: Response): Promise<void> {
     if (!(await this.rentService.exists(path.slice(1)))) {
-      const error = new Error('Rent not found');
-      this.send(res, StatusCodes.NOT_FOUND, { error: error.message});
-      return this.logger.error(error.message, error);
+      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${path.slice(1)} not found.`, 'rent controller');
     }
     const rent = await this.rentService.findById(path.slice(1));
     const resData = fillDTO(RentRdo, rent);
@@ -57,9 +56,7 @@ export class RentController extends AbstractController {
 
   public async update({body, path}: Request<Record<string, unknown>, Record<string, unknown>, CreateRentDto>, res: Response): Promise<void> {
     if (!(await this.rentService.exists(path.slice(1)))) {
-      const error = new Error('Rent not found');
-      this.send(res, StatusCodes.NOT_FOUND, { error: error.message});
-      return this.logger.error(error.message, error);
+      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${path.slice(1)} not found.`, 'rent controller');
     }
     const rent = this.rentService.updateById(path.slice(1), body);
     const resData = fillDTO(RentRdo, rent);
@@ -68,9 +65,7 @@ export class RentController extends AbstractController {
 
   public async delete({path}: Request<Record<string, unknown>, Record<string, unknown>, CreateRentDto>, res: Response): Promise<void> {
     if (!(await this.rentService.exists(path.slice(1)))) {
-      const error = new Error('Rent not found');
-      this.send(res, StatusCodes.NOT_FOUND, { error: error.message});
-      return this.logger.error(error.message, error);
+      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${path.slice(1)} not found.`, 'rent controller');
     }
     this.rentService.deleteById(path.slice(1));
     this.ok(res, StatusCodes.NO_CONTENT);

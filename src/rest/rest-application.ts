@@ -41,7 +41,7 @@ export class RestApplication {
   private async initControllers() {
     this.express.use('/comments', this.commentController.router);
     this.express.use('/rents', this.rentController.router);
-    this.express.use('/users', this.userController.router);
+    this.express.use('/', this.userController.router);
   }
 
   private async initServer() {
