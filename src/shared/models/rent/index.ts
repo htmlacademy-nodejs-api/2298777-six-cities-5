@@ -4,3 +4,4 @@ export * from './default-rent.service.js';
 export * from './dto/index.js';
 export * from './rent.const.js';
 export * from './rent.controller.js';
+export * from './type/params-rentid.type.js';

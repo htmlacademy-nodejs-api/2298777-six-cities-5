@@ -15,7 +15,11 @@ export class DefaultRentService implements RentService {
   ) {}
 
   public async create(dto: CreateRentDto): Promise<DocumentType<RentEntity>> {
-    const result = await this.rentModel.create(dto);
+    const user = await this.userModel.findById(dto.userId);
+    if (!user) {
+      throw new Error(`User with id ${dto.userId} not found`);
+    }
+    const result = await (await this.rentModel.create(dto)).populate(['userId']);
 
     this.logger.info(`New rent created with id ${result.id}`);
 
@@ -23,9 +27,8 @@ export class DefaultRentService implements RentService {
   }
 
   public async findById(rentId: string): Promise<DocumentType<RentEntity> | null> {
-    return this.rentModel.findById(rentId)
-      .populate(['userId'])
-      .exec();
+    const result = await this.rentModel.findById(rentId).populate(['userId']).exec();
+    return result;
   }
 
   public async find(): Promise<DocumentType<RentEntity>[]> {

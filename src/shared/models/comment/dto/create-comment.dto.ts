@@ -1,6 +1,6 @@
 export class CreateCommentDto {
   comment: string;
   rating: number;
-  authorId: string;
+  userId: string;
   rentId: string;
 }

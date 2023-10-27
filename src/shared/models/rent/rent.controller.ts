@@ -8,6 +8,7 @@ import { fillDTO } from '../../helpers/common.js';
 import { RentRdo } from './rdo/rent.rdo.js';
 import { StatusCodes } from 'http-status-codes';
 import { HttpError } from '../../libs/rest/index.js';
+import { ParamsRentId } from './index.js';
 
 @injectable()
 export class RentController extends AbstractController {
@@ -45,29 +46,32 @@ export class RentController extends AbstractController {
     this.created(res, resData);
   }
 
-  public async getDetailed({path}: Request<Record<string, unknown>, Record<string, unknown>, CreateRentDto>, res: Response): Promise<void> {
-    if (!(await this.rentService.exists(path.slice(1)))) {
-      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${path.slice(1)} not found.`, 'rent controller');
+  public async getDetailed({params}: Request<ParamsRentId>, res: Response): Promise<void> {
+    const rentId = params.rentId;
+    const rent = await this.rentService.findById(rentId);
+    if (!rent) {
+      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${rentId} not found.`, 'rent controller');
     }
-    const rent = await this.rentService.findById(path.slice(1));
     const resData = fillDTO(RentRdo, rent);
     this.ok(res, resData);
   }
 
-  public async update({body, path}: Request<Record<string, unknown>, Record<string, unknown>, CreateRentDto>, res: Response): Promise<void> {
-    if (!(await this.rentService.exists(path.slice(1)))) {
-      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${path.slice(1)} not found.`, 'rent controller');
+  public async update({body, params}: Request<ParamsRentId, Record<string, unknown>, CreateRentDto>, res: Response): Promise<void> {
+    const rentId = params.rentId;
+    if (!(await this.rentService.exists(rentId))) {
+      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${rentId} not found.`, 'rent controller');
     }
-    const rent = this.rentService.updateById(path.slice(1), body);
+    const rent = this.rentService.updateById(rentId, body);
     const resData = fillDTO(RentRdo, rent);
     this.ok(res, resData);
   }
 
-  public async delete({path}: Request<Record<string, unknown>, Record<string, unknown>, CreateRentDto>, res: Response): Promise<void> {
-    if (!(await this.rentService.exists(path.slice(1)))) {
-      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${path.slice(1)} not found.`, 'rent controller');
+  public async delete({params}: Request<ParamsRentId>, res: Response): Promise<void> {
+    const rentId = params.rentId;
+    if (!(await this.rentService.exists(rentId))) {
+      throw new HttpError(StatusCodes.NOT_FOUND, `Rent with id ${rentId} not found.`, 'rent controller');
     }
-    this.rentService.deleteById(path.slice(1));
-    this.ok(res, StatusCodes.NO_CONTENT);
+    this.rentService.deleteById(rentId);
+    this.noContent(res, {});
   }
 }
