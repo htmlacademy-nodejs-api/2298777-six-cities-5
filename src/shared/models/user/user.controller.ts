@@ -22,7 +22,7 @@ export class UserController extends AbstractController {
 
     logger.info('Registering routes for users');
 
-    this.get = this.get.bind(this);
+    this.show = this.show.bind(this);
     this.create = this.create.bind(this);
     this.delete = this.delete.bind(this);
     this.login = this.login.bind(this);
@@ -31,11 +31,11 @@ export class UserController extends AbstractController {
     this.addRoute({path: '/login', method: HttpMethod.Get, handler: this.login});
     this.addRoute({path: '/login', method: HttpMethod.Delete, handler: this.delete});
     this.addRoute({path: '/auth', method: HttpMethod.Get, handler: this.auth});
-    this.addRoute({path: '/users/:userId', method: HttpMethod.Get, handler: this.get});
+    this.addRoute({path: '/users/:userId', method: HttpMethod.Get, handler: this.show});
     this.addRoute({path: '/users/', method: HttpMethod.Post, handler: this.create});
   }
 
-  public async get({params}: Request<ParamsUserId>, res: Response): Promise<void> {
+  public async show({params}: Request<ParamsUserId>, res: Response): Promise<void> {
     const userId = params.userId;
     const user = await this.userService.findById(userId);
     if (!user) {

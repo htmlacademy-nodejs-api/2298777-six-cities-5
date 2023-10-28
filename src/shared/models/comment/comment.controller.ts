@@ -16,16 +16,16 @@ export class CommentController extends AbstractController {
   ) {
     super(logger);
 
-    this.get = this.get.bind(this);
+    this.show = this.show.bind(this);
     this.create = this.create.bind(this);
 
     logger.info('Registering routes for comment');
 
-    this.addRoute({path: '/:rentId', method: HttpMethod.Get, handler: this.get});
+    this.addRoute({path: '/:rentId', method: HttpMethod.Get, handler: this.show});
     this.addRoute({path: '/:rentId', method: HttpMethod.Post, handler: this.create});
   }
 
-  public async get({params}: Request<ParamsRentId>, res: Response): Promise<void> {
+  public async show({params}: Request<ParamsRentId>, res: Response): Promise<void> {
     const comments = await this.commentService.findNew(params.rentId, DEFAULT_COMMENT_COUNT);
     const resData = fillDTO(CommentRdo, comments);
     this.ok(res, resData);

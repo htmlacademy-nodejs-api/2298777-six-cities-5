@@ -24,20 +24,20 @@ export class RentController extends AbstractController {
 
     logger.info('Registering routes for rents');
 
-    this.getList = this.getList.bind(this);
+    this.index = this.index.bind(this);
     this.create = this.create.bind(this);
-    this.getDetailed = this.getDetailed.bind(this);
+    this.show = this.show.bind(this);
     this.update = this.update.bind(this);
     this.delete = this.delete.bind(this);
 
-    this.addRoute({path: '/', method: HttpMethod.Get, handler: this.getList});
+    this.addRoute({path: '/', method: HttpMethod.Get, handler: this.index});
     this.addRoute({path: '/', method: HttpMethod.Post, handler: this.create});
-    this.addRoute({path: '/:rentId', method: HttpMethod.Get, handler: this.getDetailed});
+    this.addRoute({path: '/:rentId', method: HttpMethod.Get, handler: this.show});
     this.addRoute({path: '/:rentId', method: HttpMethod.Patch, handler: this.update});
     this.addRoute({path: '/:rentId', method: HttpMethod.Delete, handler: this.delete});
   }
 
-  public async getList({query}: Request<Record<string, unknown>, Record<string, unknown>, Record<string, unknown>, QueryRent>, res: Response): Promise<void> {
+  public async index({query}: Request<Record<string, unknown>, Record<string, unknown>, Record<string, unknown>, QueryRent>, res: Response): Promise<void> {
     let rents: DocumentType<RentEntity>[];
     if (query.favorite === 'true' && !query.city && !query.premium) {
       throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'rent controller');
@@ -56,7 +56,7 @@ export class RentController extends AbstractController {
     this.created(res, resData);
   }
 
-  public async getDetailed({params}: Request<ParamsRentId>, res: Response): Promise<void> {
+  public async show({params}: Request<ParamsRentId>, res: Response): Promise<void> {
     const rentId = params.rentId;
     const rent = await this.rentService.findById(rentId);
     if (!rent) {
