@@ -3,12 +3,15 @@ import { AbstractController, HttpMethod } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { Request, Response } from 'express';
-import { CreateRentDto, RentService } from './index.js';
+import { CreateRentDto, DEFAULT_RENT_COUNT, DEFFAULT_RENT_PREMIUM_COUNT, RentEntity, RentService } from './index.js';
 import { fillDTO } from '../../helpers/common.js';
 import { RentRdo } from './rdo/rent.rdo.js';
 import { StatusCodes } from 'http-status-codes';
 import { HttpError } from '../../libs/rest/index.js';
 import { ParamsRentId } from './index.js';
+import { QueryRent } from './type/query-rent.type.js';
+import { DocumentType } from '@typegoose/typegoose';
+import { isCity } from '../../helpers/guard.js';
 
 @injectable()
 export class RentController extends AbstractController {
@@ -34,8 +37,15 @@ export class RentController extends AbstractController {
     this.addRoute({path: '/:rentId', method: HttpMethod.Delete, handler: this.delete});
   }
 
-  public async getList(_req: Request, res: Response): Promise<void> {
-    const rents = await this.rentService.find();
+  public async getList({query}: Request<Record<string, unknown>, Record<string, unknown>, Record<string, unknown>, QueryRent>, res: Response): Promise<void> {
+    let rents: DocumentType<RentEntity>[];
+    if (query.favorite === 'true' && !query.city && !query.premium) {
+      throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'rent controller');
+    } else if (isCity(query.city!) && query.premium === 'true' && !query.favorite) {
+      rents = await this.rentService.findPremium(query.city, DEFFAULT_RENT_PREMIUM_COUNT);
+    } else {
+      rents = await this.rentService.findNew(DEFAULT_RENT_COUNT);
+    }
     const resData = fillDTO(RentRdo, rents);
     this.ok(res, resData);
   }

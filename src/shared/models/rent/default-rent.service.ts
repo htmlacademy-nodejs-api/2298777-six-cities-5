@@ -27,12 +27,15 @@ export class DefaultRentService implements RentService {
   }
 
   public async findById(rentId: string): Promise<DocumentType<RentEntity> | null> {
-    const result = await this.rentModel.findById(rentId).populate(['userId']).exec();
-    return result;
+    return this.rentModel
+      .findById(rentId)
+      .select('+description +images +goods +bedrooms +maxAdults')
+      .populate(['userId'])
+      .exec();
   }
 
   public async find(): Promise<DocumentType<RentEntity>[]> {
-    return this.rentModel.find().limit(DEFAULT_RENT_COUNT).populate(['userId']).exec();
+    return this.rentModel.find().limit(DEFAULT_RENT_COUNT).exec();
   }
 
   public async deleteById(rentId: string): Promise<DocumentType<RentEntity> | null> {
@@ -51,9 +54,9 @@ export class DefaultRentService implements RentService {
   public async findNew(count: number): Promise<DocumentType<RentEntity>[]> {
     return this.rentModel
       .find()
+      .select('-userId')
       .sort({ createdAt: Sort.Down})
       .limit(count)
-      .populate(['userId'])
       .exec();
   }
 
@@ -70,7 +73,6 @@ export class DefaultRentService implements RentService {
     return this.rentModel
       .find({city, isPremium: true})
       .limit(count)
-      .populate(['userId'])
       .exec();
   }
 
@@ -93,10 +95,10 @@ export class DefaultRentService implements RentService {
       .exec();
   }
 
-  public async findByCity(city: string, count?: number): Promise<DocumentType<RentEntity>[]> {
+  public async findByCity(city: string, count: number): Promise<DocumentType<RentEntity>[]> {
     return this.rentModel
       .find({city})
-      .limit(count ?? DEFAULT_RENT_COUNT)
+      .limit(count)
       .populate(['userId'])
       .exec();
   }

@@ -32,3 +32,15 @@ export type Rent = {
     longitude: number;
   },
 }
+
+const cities = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
+
+export type City = typeof cities[number];
+
+const type = ['apartment', 'room', 'house', 'hotel'] as const;
+
+export type Type = typeof type[number];
+
+const goods = ['Breakfast', 'Air conditioning', 'Laptop friendly workspace', 'Baby seat', 'Washer', 'Towels', 'Fridge'] as const;
+
+export type Good = typeof goods[number];

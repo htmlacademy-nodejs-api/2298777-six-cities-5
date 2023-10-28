@@ -1,5 +1,6 @@
 import { Expose, Type } from 'class-transformer';
-import { UserRdo } from '../../user/rdo/user.rdo.js';
+import { UserRdo } from '../../user/index.js';
+import { CommentRdo } from '../../comment/index.js';
 
 export class RentRdo {
   @Expose()
@@ -8,8 +9,8 @@ export class RentRdo {
   @Expose()
   public description: string;
 
-  @Expose()
-  public createdAt: Date;
+  @Expose({name: 'createdAt'})
+  public date: Date;
 
   @Expose()
   public city: string;
@@ -56,4 +57,8 @@ export class RentRdo {
     latitude: number;
     longitude: number;
   };
+
+  @Expose({name: 'comments'})
+  @Type(() => CommentRdo)
+  public comments: CommentRdo[];
 }
