@@ -1,6 +1,7 @@
 import { Expose, Type } from 'class-transformer';
 import { UserRdo } from '../../user/index.js';
 import { CommentRdo } from '../../comment/index.js';
+import { City, Good, Type as TypeEnum } from '../../../types/entities.enum.js';
 
 export class RentRdo {
   @Expose()
@@ -13,7 +14,7 @@ export class RentRdo {
   public date: Date;
 
   @Expose()
-  public city: string;
+  public city: City;
 
   @Expose()
   public preview: string;
@@ -31,7 +32,7 @@ export class RentRdo {
   public rating: number;
 
   @Expose()
-  public type: string;
+  public type: TypeEnum;
 
   @Expose()
   public bedrooms: number;
@@ -43,7 +44,7 @@ export class RentRdo {
   public price: number;
 
   @Expose()
-  public goods: string[];
+  public goods: Good[];
 
   @Expose({name: 'userId'})
   @Type(() => UserRdo)
