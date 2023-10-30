@@ -12,6 +12,7 @@ import { ParamsUserId } from './index.js';
 import { ValidateObjectIdMiddleware } from '../../middleware/validate-objectid.middleware.js';
 import { ValidateDtoMiddleware } from '../../middleware/validate-dto.middleware.js';
 import { DocumentExistsMidleware } from '../../middleware/document-exists.middleware.js';
+import { UploadFileMiddleware } from '../../middleware/upload-file.middleware.js';
 
 @injectable()
 export class UserController extends AbstractController {
@@ -52,7 +53,18 @@ export class UserController extends AbstractController {
       path: '/users/',
       method: HttpMethod.Post,
       handler: this.create,
-      middlewares: [new ValidateDtoMiddleware(CreateUserDto)]
+      middlewares: [
+        new ValidateDtoMiddleware(CreateUserDto),
+      ]
+    });
+    this.addRoute({
+      path: '/users/:userId/avatar',
+      method: HttpMethod.Post,
+      handler: this.uploadAvatar,
+      middlewares: [
+        new ValidateObjectIdMiddleware('userId'),
+        new UploadFileMiddleware(this.config.get('PUBLIC_DIR'), 'avatar'),
+      ]
     });
   }
 
@@ -91,5 +103,11 @@ export class UserController extends AbstractController {
       throw new HttpError(StatusCodes.UNAUTHORIZED, 'Token not found.', 'user controller');
     }
     throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'user controller');
+  }
+
+  public async uploadAvatar(req: Request, res: Response): Promise<void> {
+    this.created(res, {
+      filepath: req.file?.path,
+    });
   }
 }

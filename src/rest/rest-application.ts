@@ -50,7 +50,7 @@ export class RestApplication {
 
   private async initMiddleware() {
     this.express.use(express.json());
-    this.express.use(express.static('public'));
+    this.express.use('/public', express.static(this.config.get('PUBLIC_DIR')));
   }
 
   public async init() : Promise<void> {
