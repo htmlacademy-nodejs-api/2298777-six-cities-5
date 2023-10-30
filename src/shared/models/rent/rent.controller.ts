@@ -58,8 +58,8 @@ export class RentController extends AbstractController {
       handler: this.update,
       middlewares: [
         new ValidateObjectIdMiddleware('rentId'),
+        new ValidateDtoMiddleware(UpdateRentDto),
         new DocumentExistsMidleware(rentService, 'rentId', 'Rent'),
-        new ValidateDtoMiddleware(UpdateRentDto)
       ]
     });
     this.addRoute({

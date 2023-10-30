@@ -50,6 +50,7 @@ export class RestApplication {
 
   private async initMiddleware() {
     this.express.use(express.json());
+    this.express.use(express.static('public'));
   }
 
   public async init() : Promise<void> {
