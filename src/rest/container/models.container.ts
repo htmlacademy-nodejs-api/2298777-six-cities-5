@@ -1,5 +1,5 @@
 import { Container } from 'inversify';
-import { UserModel, UserService } from '../../shared/models/user/index.js';
+import { AuthService, DefaultAuthService, UserModel, UserService } from '../../shared/models/user/index.js';
 import { Component } from '../../shared/types/index.js';
 import { DefaultUserService } from '../../shared/models/user/index.js';
 import { RentService } from '../../shared/models/rent/rent-service.interface.js';
@@ -16,6 +16,7 @@ export const createModelsContainer = () => {
   container.bind<typeof RentModel>(Component.RentModel).toConstantValue(RentModel);
   container.bind<CommentService>(Component.CommentService).to(DefaultCommentService).inSingletonScope();
   container.bind<typeof CommentModel>(Component.CommentModel).toConstantValue(CommentModel);
+  container.bind<AuthService>(Component.AuthService).to(DefaultAuthService).inSingletonScope();
 
   return container;
 };
