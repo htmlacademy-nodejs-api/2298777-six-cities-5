@@ -1,11 +1,12 @@
 import { Container } from 'inversify';
-import { AuthService, DefaultAuthService, UserModel, UserService } from '../../shared/models/user/index.js';
+import { UserModel, UserService } from '../../shared/models/user/index.js';
 import { Component } from '../../shared/types/index.js';
 import { DefaultUserService } from '../../shared/models/user/index.js';
 import { RentService } from '../../shared/models/rent/rent-service.interface.js';
 import { DefaultRentService } from '../../shared/models/rent/default-rent.service.js';
 import { RentModel } from '../../shared/models/rent/rent.entity.js';
 import { CommentModel, CommentService, DefaultCommentService } from '../../shared/models/comment/index.js';
+import { AuthService, DefaultAuthService } from '../../shared/models/auth/index.js';
 
 export const createModelsContainer = () => {
   const container = new Container();

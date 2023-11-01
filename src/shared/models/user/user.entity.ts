@@ -21,7 +21,7 @@ export class UserEntity extends defaultClasses.TimeStamps implements User{
   @prop({required: false, default: 'default.jpg'})
   public avatar: string;
 
-  @prop({required: true, select: false})
+  @prop({required: true, default: ''})
   private password?: string;
 
   @prop({required: true, default: false})
@@ -48,7 +48,8 @@ export class UserEntity extends defaultClasses.TimeStamps implements User{
   }
 
   public async comparePassword(line: string, salt: string) {
-    return createSHA256(line, salt) === this.password;
+    const hashPassword = createSHA256(line, salt);
+    return hashPassword === this.password;
   }
 }
 
