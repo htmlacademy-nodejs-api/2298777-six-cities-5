@@ -14,6 +14,7 @@ export type RestSchema = {
   DB_RETRY_ATTEMPTS: number;
   DB_RETRY_DELAY: number;
   PUBLIC_DIR: string;
+  JWT_SECRET: string;
 }
 
 export const configRestSchema = convict<RestSchema>({
@@ -75,6 +76,12 @@ export const configRestSchema = convict<RestSchema>({
     doc: 'Path to public dir',
     format: String,
     env: 'PUBLIC_DIR',
+    default: null,
+  },
+  JWT_SECRET: {
+    doc: 'Secret for jwt',
+    format: String,
+    env: 'JWT_SECRET',
     default: null,
   }
 });
