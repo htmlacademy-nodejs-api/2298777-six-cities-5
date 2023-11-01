@@ -28,7 +28,7 @@ export class UserController extends AbstractController {
 
     this.show = this.show.bind(this);
     this.create = this.create.bind(this);
-    this.delete = this.delete.bind(this);
+    this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
     this.auth = this.auth.bind(this);
 
@@ -38,7 +38,7 @@ export class UserController extends AbstractController {
       handler: this.login,
       middlewares: [new ValidateDtoMiddleware(LoginDto)]
     });
-    this.addRoute({path: '/login', method: HttpMethod.Delete, handler: this.delete});
+    this.addRoute({path: '/login', method: HttpMethod.Delete, handler: this.logout});
     this.addRoute({path: '/auth', method: HttpMethod.Get, handler: this.auth});
     this.addRoute({
       path: '/users/:userId',
@@ -84,7 +84,7 @@ export class UserController extends AbstractController {
     this.created(res, resData);
   }
 
-  public async delete(_req: Request, _res: Response): Promise<void> {
+  public async logout(_req: Request, _res: Response): Promise<void> {
     throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'user controller');
   }
 

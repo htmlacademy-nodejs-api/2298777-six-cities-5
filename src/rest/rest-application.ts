@@ -5,7 +5,6 @@ import { Component } from '../shared/types/index.js';
 import { DbClient } from '../shared/libs/db-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
 import express, { Express } from 'express';
-
 import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
 
 @injectable()
@@ -20,6 +19,7 @@ export class RestApplication {
     @inject(Component.RentController) private readonly rentController: Controller,
     @inject(Component.UserController) private readonly userController: Controller,
     @inject(Component.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter,
+    @inject(Component.AuthExceptionFilter) private readonly authExceptionFilter: ExceptionFilter,
   ) {
     this.express = express();
   }
@@ -35,6 +35,7 @@ export class RestApplication {
   }
 
   private async initFilters() {
+    this.express.use(this.authExceptionFilter.catch.bind(this.authExceptionFilter));
     this.express.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
   }
 

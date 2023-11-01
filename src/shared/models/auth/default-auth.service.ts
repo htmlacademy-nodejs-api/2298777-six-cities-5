@@ -3,12 +3,9 @@ import { LoginDto, UserEntity, UserService } from '../user/index.js';
 import { Component } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { Config, RestSchema } from '../../libs/config/index.js';
-import { AuthService } from './auth-sercice.interface.js';
 import { createSecretKey } from 'node:crypto';
-import { TokenPayload } from './types/token-payload.type.js';
 import { SignJWT } from 'jose';
-import { JWT_ALGORITHM, JWT_EXPIRES_IN } from './auth.constant.js';
-import { HttpError } from '../../libs/rest/index.js';
+import { AuthError, AuthService, JWT_ALGORITHM, JWT_EXPIRES_IN, TokenPayload } from './index.js';
 
 @injectable()
 export class DefaultAuthService implements AuthService {
@@ -40,13 +37,13 @@ export class DefaultAuthService implements AuthService {
     const user = await this.userService.findByEmail(login.email);
 
     if (!user) {
-      throw new HttpError(501, 'User not found');
+      throw new AuthError();
     }
 
     const isPasswordValid = await user.comparePassword(login.password, this.config.get('SALT'));
 
     if (!isPasswordValid) {
-      throw new HttpError(501, 'Password is not valid');
+      throw new AuthError();
     }
 
     return user;
