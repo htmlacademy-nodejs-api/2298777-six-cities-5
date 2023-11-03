@@ -1,6 +1,6 @@
 import { DocumentType } from '@typegoose/typegoose';
 import { UserEntity } from './user.entity.js';
-import { CreateUserDto, UpdateUserDto } from './index.js';
+import { Action, CreateUserDto, UpdateUserDto } from './index.js';
 
 export interface UserService {
   findByEmail(email: string): Promise<DocumentType<UserEntity> | null>;
@@ -8,5 +8,7 @@ export interface UserService {
   findOrCreate(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>>;
   updateById(id: string, dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null>;
   findById(id: string): Promise<DocumentType<UserEntity> | null>;
-  exists(userId: string): Promise<boolean>;
+  exists(id: string): Promise<boolean>;
+  isRentInFavorite(userId: string, rentId: string): Promise<boolean>;
+  updateFavorite(id: string, rentId: string, action: typeof Action[keyof typeof Action]): Promise<DocumentType<UserEntity> | null>;
 }

@@ -15,6 +15,7 @@ import { DocumentExistsMidleware } from '../../middleware/document-exists.middle
 import { UploadFileMiddleware } from '../../middleware/upload-file.middleware.js';
 import { AuthService } from '../auth/index.js';
 import { LoginRdo } from './rdo/login.rdo.js';
+import { PrivateRouteMiddleware } from '../../middleware/index.js';
 
 @injectable()
 export class UserController extends AbstractController {
@@ -31,7 +32,6 @@ export class UserController extends AbstractController {
 
     this.show = this.show.bind(this);
     this.create = this.create.bind(this);
-    this.logout = this.logout.bind(this);
     this.login = this.login.bind(this);
     this.auth = this.auth.bind(this);
 
@@ -41,7 +41,6 @@ export class UserController extends AbstractController {
       handler: this.login,
       middlewares: [new ValidateDtoMiddleware(LoginDto)]
     });
-    this.addRoute({path: '/login', method: HttpMethod.Delete, handler: this.logout});
     this.addRoute({path: '/auth', method: HttpMethod.Get, handler: this.auth});
     this.addRoute({
       path: '/users/:userId',
@@ -65,6 +64,7 @@ export class UserController extends AbstractController {
       method: HttpMethod.Post,
       handler: this.uploadAvatar,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('userId'),
         new UploadFileMiddleware(this.config.get('PUBLIC_DIR'), 'avatar'),
       ]
@@ -77,7 +77,10 @@ export class UserController extends AbstractController {
     this.ok(res, resData);
   }
 
-  public async create({body}: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>, res: Response): Promise<void> {
+  public async create({body, tokenPayload}: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>, res: Response): Promise<void> {
+    if (tokenPayload) {
+      throw new HttpError(StatusCodes.FORBIDDEN, 'Forbidden', 'user controller');
+    }
     const user = await this.userService.findByEmail(body.email);
     if (user) {
       throw new HttpError(StatusCodes.CONFLICT, `User with email ${body.email} already exists.`, 'user controller');
@@ -85,10 +88,6 @@ export class UserController extends AbstractController {
     const newUser = await this.userService.create(body, this.config.get('SALT'));
     const resData = fillDTO(UserRdo, newUser);
     this.created(res, resData);
-  }
-
-  public async logout(_req: Request, _res: Response): Promise<void> {
-    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'user controller');
   }
 
   public async login({body}: Request<Record<string, unknown>, Record<string, unknown>, LoginDto>, res: Response): Promise<void> {
@@ -101,12 +100,13 @@ export class UserController extends AbstractController {
     this.ok(res, resData);
   }
 
-  public async auth({headers}: Request<Record<string, unknown>, Record<string, unknown>>, _res: Response): Promise<void> {
-    const token = headers.authorization;
-    if (!token) {
-      throw new HttpError(StatusCodes.UNAUTHORIZED, 'Token not found.', 'user controller');
+  public async auth({tokenPayload}: Request, res: Response): Promise<void> {
+    const user = await this.userService.findByEmail(tokenPayload.email);
+    if (!user) {
+      throw new HttpError(StatusCodes.UNAUTHORIZED, 'Unauthorized', 'UserController');
     }
-    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'user controller');
+    const resData = fillDTO(UserRdo, user);
+    this.ok(res, resData);
   }
 
   public async uploadAvatar(req: Request, res: Response): Promise<void> {

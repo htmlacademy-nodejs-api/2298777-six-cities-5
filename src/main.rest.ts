@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
 import { RestApplication } from './rest/index.js';
 import { Component } from './shared/types/component.enum.js';
-import { createControllerContainer, createRestContainer, createModelsContainer, createFilterContainer } from './rest/container/index.js';
+import { createControllerContainer, createRestContainer, createModelsContainer, createFilterContainer, createMiddlewareContainer } from './rest/container/index.js';
 
 const bootstrap = async () => {
   const container = Container.merge(
@@ -9,6 +9,7 @@ const bootstrap = async () => {
     createModelsContainer(),
     createControllerContainer(),
     createFilterContainer(),
+    createMiddlewareContainer(),
   );
 
   const restApplication = container.get<RestApplication>(Component.RestApplication);

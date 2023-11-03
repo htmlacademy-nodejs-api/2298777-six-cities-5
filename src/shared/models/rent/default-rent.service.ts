@@ -43,12 +43,16 @@ export class DefaultRentService implements RentService {
   }
 
   public async updateById(rentId: string, dto: UpdateRentDto): Promise<DocumentType<RentEntity> | null> {
-    return this.rentModel.findByIdAndUpdate(rentId, dto, {new: true}).populate(['userId']).exec();
+    return this.rentModel
+      .findByIdAndUpdate(rentId, dto, {new: true})
+      .select('+description +images +goods +bedrooms +maxAdults')
+      .populate(['userId'])
+      .exec();
   }
 
-  public async exists(rentId: string): Promise<boolean> {
+  public async exists(id: string): Promise<boolean> {
     return (await this.rentModel
-      .exists({_id: rentId})) !== null;
+      .exists({_id: id})) !== null;
   }
 
   public async findNew(count: number): Promise<DocumentType<RentEntity>[]> {

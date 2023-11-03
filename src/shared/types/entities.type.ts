@@ -18,15 +18,15 @@ export type Rent = {
   title: string;
   description: string;
   date: string | Date;
-  city: City;
+  city: string | City;
   preview: string;
   images: string[];
   isPremium: boolean;
-  type: Type;
+  type: Type | string;
   bedrooms: number;
   maxAdults: number;
   price: number;
-  goods: Good[];
+  goods: Good[] | string[];
   author: User;
   comments: Omit<Comment, 'author'>[];
   location: {
