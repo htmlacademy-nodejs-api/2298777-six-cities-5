@@ -3,9 +3,9 @@ import { Middleware, isTokenPayload } from './index.js';
 import { jwtVerify } from 'jose';
 import { createSecretKey } from 'node:crypto';
 import { inject, injectable } from 'inversify';
-import { Component } from '../types/component.enum.js';
-import { Config, RestSchema } from '../libs/config/index.js';
-import { HttpError } from '../libs/rest/index.js';
+import { Component } from '../../../types/component.enum.js';
+import { Config, RestSchema } from '../../config/index.js';
+import { HttpError } from '../index.js';
 import { StatusCodes } from 'http-status-codes';
 
 @injectable()

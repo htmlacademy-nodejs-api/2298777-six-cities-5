@@ -6,7 +6,7 @@ import { DbClient } from '../shared/libs/db-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
 import express, { Express } from 'express';
 import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
-import { Middleware } from '../shared/middleware/index.js';
+import { Middleware } from '../shared/libs/rest/middleware/index.js';
 
 @injectable()
 export class RestApplication {

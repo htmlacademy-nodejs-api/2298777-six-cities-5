@@ -1,7 +1,7 @@
 import { Container } from 'inversify';
-import { Middleware } from '../../shared/middleware/middleware.interface.js';
+import { Middleware } from '../../shared/libs/rest/middleware/middleware.interface.js';
 import { Component } from '../../shared/types/component.enum.js';
-import { ParseTokenMiddleware } from '../../shared/middleware/parse-token.middleware.js';
+import { ParseTokenMiddleware } from '../../shared/libs/rest/middleware/parse-token.middleware.js';
 
 export const createMiddlewareContainer = () => {
   const container = new Container();
