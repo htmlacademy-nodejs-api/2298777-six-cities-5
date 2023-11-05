@@ -3,6 +3,7 @@ import { ValidationError } from 'class-validator';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ValidationErrorType } from '../libs/rest/types/validation-erorr.type.js';
+import { AppError } from '../libs/rest/types/app-error.enum.js';
 
 export const getErrorMessage = (error: unknown) =>
   error instanceof Error ? error.message : '';
@@ -13,9 +14,12 @@ export const getProjectDirectory = () =>
 export const fillDTO = <T, V>(dto: ClassConstructor<T>, plainObject: V) =>
   plainToInstance(dto, plainObject, {excludeExtraneousValues: true});
 
-export const createErrorObject = (message: Error) => ({
-  error: message,
+export const createErrorObject = (errorType: AppError, error: string, details: ValidationErrorType[] = []) => ({
+  errorType,
+  error,
+  details,
 });
+
 
 export const makeCapitalized = (str: string) =>
   str.charAt(0).toUpperCase() + str.slice(1);

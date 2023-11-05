@@ -19,9 +19,11 @@ export class RestApplication {
     @inject(Component.CommentController) private readonly commentController: Controller,
     @inject(Component.RentController) private readonly rentController: Controller,
     @inject(Component.UserController) private readonly userController: Controller,
-    @inject(Component.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter,
+    @inject(Component.AppExceptionFilter) private readonly appExceptionFilter: ExceptionFilter,
     @inject(Component.AuthExceptionFilter) private readonly authExceptionFilter: ExceptionFilter,
     @inject(Component.ParseTokenMiddleware) private readonly parseTokenMiddleware: Middleware,
+    @inject(Component.ValidationExceptionFilter) private readonly validationExceptionFilter: ExceptionFilter,
+    @inject(Component.HttpExceptionFilter) private readonly httpExceptionFilter: ExceptionFilter,
   ) {
     this.express = express();
   }
@@ -38,7 +40,9 @@ export class RestApplication {
 
   private async initFilters() {
     this.express.use(this.authExceptionFilter.catch.bind(this.authExceptionFilter));
-    this.express.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
+    this.express.use(this.validationExceptionFilter.catch.bind(this.validationExceptionFilter));
+    this.express.use(this.httpExceptionFilter.catch.bind(this.httpExceptionFilter));
+    this.express.use(this.appExceptionFilter.catch.bind(this.appExceptionFilter));
   }
 
   private async initControllers() {

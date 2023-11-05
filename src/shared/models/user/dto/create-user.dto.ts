@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsBoolean, IsEmail, MaxLength, MinLength } from 'class-validator';
 import { CreateUserMessages } from './create-user.messages.js';
 
 export class CreateUserDto {
@@ -8,9 +8,6 @@ export class CreateUserDto {
 
   @IsEmail({}, {message: CreateUserMessages.email.isEmail})
   public email: string;
-
-  @IsString({message: CreateUserMessages.avatar.isString})
-  public avatar: string;
 
   @MinLength(6, {message: CreateUserMessages.password.minLength})
   @MaxLength(12, {message: CreateUserMessages.password.maxLength})
