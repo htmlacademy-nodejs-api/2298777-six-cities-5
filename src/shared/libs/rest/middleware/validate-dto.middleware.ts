@@ -2,18 +2,18 @@ import { Request, Response, NextFunction } from 'express';
 import { Middleware } from './middleware.interface.js';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { validate } from 'class-validator';
-import { StatusCodes } from 'http-status-codes';
+import { ValidationError } from '../index.js';
+import { reduceValidation } from '../../../helpers/common.js';
 
 export class ValidateDtoMiddleware implements Middleware {
   constructor(private dto: ClassConstructor<object>) {}
 
-  public async execute(req: Request, res: Response, next: NextFunction): Promise<void> {
-    const dto = plainToInstance(this.dto, req.body);
+  public async execute({body}: Request, _res: Response, next: NextFunction): Promise<void> {
+    const dto = plainToInstance(this.dto, body);
     const errors = await validate(dto);
 
     if (errors.length) {
-      res.status(StatusCodes.BAD_REQUEST).send(errors);
-      return;
+      throw new ValidationError('Errors:', reduceValidation(errors));
     }
 
     next();
