@@ -2,6 +2,10 @@ tags:
   - favorites
 summary: Изменение статуса любимого предложения.
 description: Изменение статуса любимого предложения у авторизованого пользователя.
+security:
+  - bearerAuth:
+      - read
+      - write
 responses:
   "201":
     description: Статус успешно изменен.

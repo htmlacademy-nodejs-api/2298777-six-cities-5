@@ -64,3 +64,9 @@ paths:
     post:
       $ref: ./methods/post-favorites.yml
 
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

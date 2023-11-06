@@ -12,6 +12,6 @@ responses:
     content:
       application/json:
         schema:
-          $ref: ../schemas/get-user.yml
+          $ref: ../schemas/login-rdo.yml
   "400":
     description: Неправильный данные пользователя.

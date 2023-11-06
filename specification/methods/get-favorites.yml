@@ -2,6 +2,10 @@ tags:
   - favorites
 summary: Получение любимых предложений.
 description: Получение любимых предложений для авторизованого пользователя.
+security:
+  - bearerAuth:
+      - read
+      - write
 responses:
   "200":
     description: Список любимых предложений успешно получен.

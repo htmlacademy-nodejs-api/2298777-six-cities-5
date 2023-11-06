@@ -1,10 +1,10 @@
 tags:
   - auth
 summary: Проверяет аутефикацию пользователя.
-headers:
-  X-Token:
-    type: string
-    example: sdgsdfgd
+security:
+  - bearerAuth:
+      - read
+      - write
 responses:
   "200":
     description: Аутентификация прошла успешно.

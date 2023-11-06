@@ -1,0 +1,19 @@
+type: object
+properties:
+  name:
+    type: string
+    example: bob
+  email:
+    type: string
+    example: bob@gmail.com
+  avatar:
+    type: string
+    example: default-avatar.jpg
+  isPro:
+    type: boolean
+  password:
+    type: string
+    example: secret
+  token:
+    type:
+    example: 123456

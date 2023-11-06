@@ -2,6 +2,10 @@ tags:
   - rents
 summary: Обновляет предложение
 description:  Обновляет одно или несколько полей в указанном предложение.
+security:
+  - bearerAuth:
+      - read
+      - write
 requestBody:
   content:
     application/json:
