@@ -13,14 +13,14 @@ export interface CommentEntity extends defaultClasses.Base {}
 })
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class CommentEntity extends defaultClasses.TimeStamps {
-  @prop({required: true, minlength: 5, trim: true})
+  @prop({required: true, minlength: 5, maxlength: 1024, trim: true})
   public comment: string;
 
   @prop({required: true, min: 1, max: 5})
   public rating: number;
 
   @prop({required: true, ref: UserEntity})
-  public authorId: Ref<UserEntity>;
+  public userId: Ref<UserEntity>;
 
   @prop({required: true, ref: RentEntity})
   public rentId: Ref<RentEntity>;
@@ -30,7 +30,7 @@ export class CommentEntity extends defaultClasses.TimeStamps {
 
     this.comment = data.comment;
     this.rating = data.rating;
-    this.authorId = data.authorId;
+    this.userId = data.userId;
     this.rentId = data.rentId;
   }
 }

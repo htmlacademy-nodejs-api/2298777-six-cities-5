@@ -1,1 +1,2 @@
-export const DEFAULT_RENT_COUNT = 25;
+export const DEFAULT_RENT_COUNT = 60;
+export const DEFFAULT_RENT_PREMIUM_COUNT = 3;

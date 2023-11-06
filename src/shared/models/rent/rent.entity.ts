@@ -1,4 +1,5 @@
 import { Ref, defaultClasses, getModelForClass, modelOptions, prop } from '@typegoose/typegoose';
+import { City, Good, Type } from '../../types/entities.type.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export interface RentEntity extends defaultClasses.Base {}
@@ -8,44 +9,47 @@ export interface RentEntity extends defaultClasses.Base {}
 }})
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 export class RentEntity extends defaultClasses.TimeStamps {
-  @prop({required: true, minlength: 5, maxlength: 100, trim: true})
+  @prop({required: true, minlength: 10, maxlength: 100, trim: true})
   public title: string;
 
-  @prop({required: true, minlength: 5, maxlength: 3000, trim: true})
+  @prop({required: true, minlength: 20, maxlength: 1024, trim: true, select: false})
   public description: string;
 
   @prop({required: true})
-  public city: string;
+  public city: City;
 
   @prop({required: true})
   public preview: string;
 
-  @prop()
+  @prop({select: false, required: true})
   public images: string[];
 
-  @prop({required: false, default: false})
+  @prop({required: true, default: false})
   public isPremium: boolean;
 
-  @prop({required: false, min: 1, max: 5, default: 1})
+  @prop({required: true, default: false})
+  public isFavorite: boolean;
+
+  @prop({required: false, min: 1, max: 5})
   public rating: number;
 
   @prop({required: true})
-  public type: string;
+  public type: Type;
 
-  @prop({required: true, min: 1, max: 10})
+  @prop({required: true, min: 1, max: 8, select: false})
   public bedrooms: number;
 
-  @prop({required: true, min: 1, max: 20})
+  @prop({required: true, min: 1, max: 10, select: false})
   public maxAdults: number;
 
-  @prop({required: true, min: 1, max: 20000})
+  @prop({required: true, min: 100, max: 100000})
   public price: number;
 
-  @prop()
-  public goods: string[];
+  @prop({select: false, required: true})
+  public goods: Good[];
 
-  @prop({ref: 'UserEntity', required: true})
-  public authorId: Ref<'UserEntity'>;
+  @prop({ref: 'UserEntity', required: true, select: false})
+  public userId: Ref<'UserEntity'>;
 
   @prop({required: true})
   public location: {
@@ -69,7 +73,7 @@ export class RentEntity extends defaultClasses.TimeStamps {
     this.bedrooms = data.bedrooms;
     this.maxAdults = data.maxAdults;
     this.goods = data.goods;
-    this.authorId = data.authorId;
+    this.userId = data.userId;
     this.location = data.location;
   }
 }

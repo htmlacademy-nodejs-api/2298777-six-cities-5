@@ -1,6 +1,6 @@
 import { inject, injectable } from 'inversify';
 import { CommentEntity, CommentModel, CommentService, CreateCommentDto } from './index.js';
-import { Component } from '../../types/index.js';
+import { Component, Sort } from '../../types/index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { DocumentType } from '@typegoose/typegoose';
 import { RentModel } from '../rent/index.js';
@@ -36,26 +36,6 @@ export class DefaultCommentService implements CommentService {
       .exec();
   }
 
-  public async deleteById(id: string): Promise<DocumentType<CommentEntity> | null> {
-    const comment = await this.commentModel.findById(id).exec();
-
-    if (!comment) {
-      return null;
-    }
-
-    const rent = await this.rentModel.findById(comment.rentId).exec();
-
-    await rent?.updateOne({$inc: {commentsCount: -1}}, {new: true});
-
-    const newRating = this.calculateRating(rent?.id);
-
-    await rent?.updateOne({rating: newRating}, {new: true});
-
-    await comment.deleteOne();
-
-    return comment;
-  }
-
   public async findByRentId(rentId: string, limit: number): Promise<DocumentType<CommentEntity>[]> {
     return this.commentModel
       .find({rentId: rentId})
@@ -76,5 +56,14 @@ export class DefaultCommentService implements CommentService {
     }
 
     return rating;
+  }
+
+  public async findNew(rentId: string, limit: number): Promise<DocumentType<CommentEntity>[]> {
+    return this.commentModel
+      .find({rentId})
+      .sort({createdAt: Sort.Down})
+      .limit(limit)
+      .populate(['userId'])
+      .exec();
   }
 }

@@ -64,7 +64,7 @@ properties:
       - freezer
       - shower
 
-  authorId:
+  userId:
     type: string
     example: 54543208fuhs231
 

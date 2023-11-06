@@ -62,14 +62,14 @@ export class ImportCommand implements Command {
       maxAdults: dto.maxAdults,
       price: dto.price,
       goods: dto.goods,
-      authorId: user.id,
+      userId: user.id,
       location: dto.location,
     });
 
     for (const comment of dto.comments) {
       await this.commentService.create({
         comment: comment.comment,
-        authorId: user.id,
+        userId: user.id,
         rating: comment.rating,
         rentId: rent.id
       });

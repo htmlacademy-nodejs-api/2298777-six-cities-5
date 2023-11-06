@@ -15,7 +15,11 @@ export class DefaultRentService implements RentService {
   ) {}
 
   public async create(dto: CreateRentDto): Promise<DocumentType<RentEntity>> {
-    const result = await this.rentModel.create(dto);
+    const user = await this.userModel.findById(dto.userId);
+    if (!user) {
+      throw new Error(`User with id ${dto.userId} not found`);
+    }
+    const result = await (await this.rentModel.create(dto)).populate(['userId']);
 
     this.logger.info(`New rent created with id ${result.id}`);
 
@@ -23,13 +27,15 @@ export class DefaultRentService implements RentService {
   }
 
   public async findById(rentId: string): Promise<DocumentType<RentEntity> | null> {
-    return this.rentModel.findById(rentId)
+    return this.rentModel
+      .findById(rentId)
+      .select('+description +images +goods +bedrooms +maxAdults')
       .populate(['userId'])
       .exec();
   }
 
   public async find(): Promise<DocumentType<RentEntity>[]> {
-    return this.rentModel.find().limit(DEFAULT_RENT_COUNT).populate(['userId']).exec();
+    return this.rentModel.find().limit(DEFAULT_RENT_COUNT).exec();
   }
 
   public async deleteById(rentId: string): Promise<DocumentType<RentEntity> | null> {
@@ -41,15 +47,16 @@ export class DefaultRentService implements RentService {
   }
 
   public async exists(rentId: string): Promise<boolean> {
-    return this.rentModel.exists({id: rentId}).exec() !== null;
+    return (await this.rentModel
+      .exists({_id: rentId})) !== null;
   }
 
   public async findNew(count: number): Promise<DocumentType<RentEntity>[]> {
     return this.rentModel
       .find()
+      .select('-userId')
       .sort({ createdAt: Sort.Down})
       .limit(count)
-      .populate(['userId'])
       .exec();
   }
 
@@ -66,7 +73,6 @@ export class DefaultRentService implements RentService {
     return this.rentModel
       .find({city, isPremium: true})
       .limit(count)
-      .populate(['userId'])
       .exec();
   }
 
@@ -89,10 +95,10 @@ export class DefaultRentService implements RentService {
       .exec();
   }
 
-  public async findByCity(city: string, count?: number): Promise<DocumentType<RentEntity>[]> {
+  public async findByCity(city: string, count: number): Promise<DocumentType<RentEntity>[]> {
     return this.rentModel
       .find({city})
-      .limit(count ?? DEFAULT_RENT_COUNT)
+      .limit(count)
       .populate(['userId'])
       .exec();
   }
