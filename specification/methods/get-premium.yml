@@ -1,0 +1,18 @@
+summary: Retrieves premium information for a given user.
+tags:
+  - premium
+parameters:
+  - name: city
+    in: query
+    description: Город, для которого запрашивается информация о премиуме.
+    required: true
+    schema:
+      type: string
+      enum: [Cologne, Amsterdam, Dusseldorf, Paris, Brussels, Hamburg]
+responses:
+  '200':
+    description: A dictionary containing the premium information for the user.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-rents.yml
