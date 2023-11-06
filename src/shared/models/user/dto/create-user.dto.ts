@@ -13,6 +13,8 @@ export class CreateUserDto {
   @MaxLength(12, {message: CreateUserMessages.password.maxLength})
   public password: string;
 
+  public avatar: string;
+
   @IsBoolean({message: CreateUserMessages.isPro.isBoolean})
   public isPro: boolean;
 }

@@ -85,7 +85,14 @@ export class UserController extends AbstractController {
       throw new HttpError(StatusCodes.CONFLICT, `User with email ${body.email} already exists.`, 'user controller');
     }
     const newUser = await this.userService.create(body, this.config.get('SALT'));
-    const resData = fillDTO(UserRdo, newUser);
+    const token = await this.authService.authenticate(newUser);
+    const resData = fillDTO(LoginRdo, {
+      name: newUser.name,
+      email: newUser.email,
+      avatar: newUser.getAvatar(),
+      isPro: newUser.isPro,
+      token,
+    });
     this.created(res, resData);
   }
 
@@ -93,7 +100,10 @@ export class UserController extends AbstractController {
     const user = await this.authService.verify(body);
     const token = await this.authService.authenticate(user);
     const resData = fillDTO(LoginRdo, {
+      name: user.name,
       email: user.email,
+      avatar: user.getAvatar(),
+      isPro: user.isPro,
       token,
     });
     this.ok(res, resData);
@@ -109,10 +119,11 @@ export class UserController extends AbstractController {
   }
 
   public async uploadAvatar({tokenPayload, file}: Request, res: Response): Promise<void> {
-    const user = await this.userService.updateById(tokenPayload.id, {avatar: file?.path});
-    console.log(user);
-    this.created(res, {
-      filepath: file?.path,
-    });
+    const user = await this.userService.updateById(tokenPayload.id, {avatar: file?.filename});
+    if (!user) {
+      throw new HttpError(StatusCodes.NOT_FOUND, 'Unauthorized', 'UserController');
+    }
+    const resData = fillDTO(UserRdo, user);
+    this.created(res, resData);
   }
 }

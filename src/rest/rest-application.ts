@@ -7,6 +7,7 @@ import { getFullUrl, getMongoURI } from '../shared/helpers/index.js';
 import express, { Express } from 'express';
 import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
 import { Middleware } from '../shared/libs/rest/middleware/index.js';
+import cors from 'cors';
 
 @injectable()
 export class RestApplication {
@@ -57,6 +58,7 @@ export class RestApplication {
 
   private async initMiddleware() {
     this.express.use(express.json());
+    this.express.use(cors());
     this.express.use(`/${this.config.get('PUBLIC_DIR')}`, express.static(this.config.get('PUBLIC_DIR')));
     this.express.use(`/${this.config.get('STATIC_DIR')}`, express.static(this.config.get('STATIC_DIR')));
     this.express.use(this.parseTokenMiddleware.execute.bind(this.parseTokenMiddleware));

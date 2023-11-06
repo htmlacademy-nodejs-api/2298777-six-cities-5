@@ -42,7 +42,15 @@ export class DefaultUserService implements UserService {
   }
 
   public async updateById(id: string, dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null> {
-    return this.userModel.findByIdAndUpdate(id, dto, {new: true}).exec();
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      return null;
+    }
+    if (dto.avatar) {
+      user?.setAvatar(dto.avatar);
+    }
+    await user?.updateOne(dto, {new: true}).exec();
+    return user;
   }
 
   public async updateFavorite(id: string, rentId: string, action: typeof Action[keyof typeof Action]): Promise<DocumentType<UserEntity> | null> {
