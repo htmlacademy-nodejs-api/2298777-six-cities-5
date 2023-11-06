@@ -3,7 +3,7 @@ import { Logger } from '../shared/libs/logger/index.js';
 import { injectable, inject } from 'inversify';
 import { Component } from '../shared/types/index.js';
 import { DbClient } from '../shared/libs/db-client/index.js';
-import { getMongoURI } from '../shared/helpers/index.js';
+import { getFullUrl, getMongoURI } from '../shared/helpers/index.js';
 import express, { Express } from 'express';
 import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
 import { Middleware } from '../shared/libs/rest/middleware/index.js';
@@ -57,7 +57,8 @@ export class RestApplication {
 
   private async initMiddleware() {
     this.express.use(express.json());
-    this.express.use('/public', express.static(this.config.get('PUBLIC_DIR')));
+    this.express.use(`/${this.config.get('PUBLIC_DIR')}`, express.static(this.config.get('PUBLIC_DIR')));
+    this.express.use(`/${this.config.get('STATIC_DIR')}`, express.static(this.config.get('STATIC_DIR')));
     this.express.use(this.parseTokenMiddleware.execute.bind(this.parseTokenMiddleware));
   }
 
@@ -82,6 +83,6 @@ export class RestApplication {
 
     this.logger.info('Init server');
     await this.initServer();
-    this.logger.info(`Server started on localhost:${this.config.get('PORT')}`);
+    this.logger.info(`Server started on ${getFullUrl(this.config.get('PROTOCOL'), this.config.get('HOST'), this.config.get('PORT'), '')}`);
   }
 }

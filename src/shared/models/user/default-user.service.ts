@@ -4,7 +4,7 @@ import { inject, injectable } from 'inversify';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { Types } from 'mongoose';
-import { StaticImages } from '../../libs/rest/static-images.const.js';
+import { DEFAULT_AVATAR } from '../../libs/rest/static.const.js';
 
 @injectable()
 export class DefaultUserService implements UserService {
@@ -18,7 +18,7 @@ export class DefaultUserService implements UserService {
     const user = new UserEntity(dto);
 
     user.setPassword(dto.password, salt);
-    user.setAvatar(StaticImages.DefaultAvatar);
+    user.setAvatar(DEFAULT_AVATAR);
 
     const result = await this.userModel.create(user);
 

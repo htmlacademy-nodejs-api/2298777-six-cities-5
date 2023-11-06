@@ -29,3 +29,6 @@ export const reduceValidation = (errors: ValidationError[]) => errors.map(({prop
   value,
   messages: constraints ? Object.values(constraints) : []
 }));
+
+export const getFullUrl = (protocol: string, host: string, port: number, path: string) =>
+  `${protocol}://${host}:${port}/${path}`;

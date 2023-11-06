@@ -18,4 +18,5 @@ export const Component = {
   ParseTokenMiddleware: Symbol.for('ParseTokenMiddleware'),
   ValidationExceptionFilter: Symbol.for('ValidationExceptionFilter'),
   HttpExceptionFilter: Symbol.for('HttpExceptionFilter'),
+  PathInterceptor: Symbol.for('PathInterceptor'),
 } as const;
