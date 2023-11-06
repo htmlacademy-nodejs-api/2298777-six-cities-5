@@ -15,9 +15,8 @@ POST http://localhost:4000/users HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "Magotts@gmail.com",
+  "email": "Magots@gmail.com",
   "name": "baduk",
-  "avatar": "vvv.jpg",
   "password": "badi228",
   "isPro": false
 }
@@ -45,8 +44,9 @@ Authorization:  Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDg5ZDQ2NWEwNDI4ODgzYzVh
 
 # post avatar
 
-POST http://localhost:4000/users/653bd44d4d9094194efd2a2c/avatar HTTP/1.1
+POST http://localhost:4000/users/avatar HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDg5ZDQ2NWEwNDI4ODgzYzVhYzVmYiIsImVtYWlsIjoiTWFnb3RzQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MzQ0MDg3LCJpYXQiOjE2OTkyNTc2ODd9.V2KzPFWLFEZE5trlx8MI1Xv7bYZ9AiccfGNNEUIUPnY
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW
 Content-Disposition: form-data; name="avatar"; filename="1b6e0650b5aafe19efe20aa80f.jpg"

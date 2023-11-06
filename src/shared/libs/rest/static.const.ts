@@ -1,6 +1,7 @@
 export const DEFAULT_AVATAR = 'default-avatar.jpg';
 
-export const STATIC_RESOURCE_FIELDS = [
+export const RESOURCE_FIELDS = [
   'avatar',
-  'image'
+  'preview',
+  'images'
 ];

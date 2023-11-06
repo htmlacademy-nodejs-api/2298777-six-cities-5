@@ -60,12 +60,11 @@ export class UserController extends AbstractController {
       ]
     });
     this.addRoute({
-      path: '/users/:userId/avatar',
+      path: '/users/avatar',
       method: HttpMethod.Post,
       handler: this.uploadAvatar,
       middlewares: [
         new PrivateRouteMiddleware(),
-        new ValidateObjectIdMiddleware('userId'),
         new UploadFileMiddleware(this.config.get('PUBLIC_DIR'), 'avatar'),
       ]
     });
@@ -109,9 +108,11 @@ export class UserController extends AbstractController {
     this.ok(res, resData);
   }
 
-  public async uploadAvatar(req: Request, res: Response): Promise<void> {
+  public async uploadAvatar({tokenPayload, file}: Request, res: Response): Promise<void> {
+    const user = await this.userService.updateById(tokenPayload.id, {avatar: file?.path});
+    console.log(user);
     this.created(res, {
-      filepath: req.file?.path,
+      filepath: file?.path,
     });
   }
 }
