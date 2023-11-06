@@ -53,6 +53,8 @@ export class DefaultUserService implements UserService {
     const toCheck = new Types.ObjectId(rentId);
     const index = favorites.indexOf(toCheck);
 
+    this.logger.info(`User ${user.id} changed favorite status for rent ${rentId}`);
+
     if (action === 'add' && index === -1) {
       favorites.push(toCheck);
     } else if (action === 'delete' && index !== -1) {
@@ -68,8 +70,13 @@ export class DefaultUserService implements UserService {
     return this.userModel.findById(id).exec();
   }
 
-  public async exists(userId: string): Promise<boolean> {
+  public async exists(id: string): Promise<boolean> {
     return (await this.userModel
-      .exists({_id: userId})) !== null;
+      .exists({_id: id})) !== null;
+  }
+
+  public async isRentInFavorite(userId: string, rentId: string): Promise<boolean> {
+    const user = await this.userModel.findById(userId).exec();
+    return user?.favoriteRentsIds.includes(new Types.ObjectId(rentId)) ?? false;
   }
 }

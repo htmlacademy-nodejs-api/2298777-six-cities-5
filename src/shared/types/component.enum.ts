@@ -13,4 +13,7 @@ export const Component = {
   RentController: Symbol.for('RentController'),
   UserController: Symbol.for('UserController'),
   ExceptionFilter: Symbol.for('ExceptionFilter'),
+  AuthService: Symbol.for('AuthService'),
+  AuthExceptionFilter: Symbol.for('AuthExceptionFilter'),
+  ParseTokenMiddleware: Symbol.for('ParseTokenMiddleware'),
 } as const;

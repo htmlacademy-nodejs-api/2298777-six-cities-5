@@ -5,8 +5,8 @@ import { Component } from '../shared/types/index.js';
 import { DbClient } from '../shared/libs/db-client/index.js';
 import { getMongoURI } from '../shared/helpers/index.js';
 import express, { Express } from 'express';
-
 import { Controller, ExceptionFilter } from '../shared/libs/rest/index.js';
+import { Middleware } from '../shared/middleware/index.js';
 
 @injectable()
 export class RestApplication {
@@ -20,6 +20,8 @@ export class RestApplication {
     @inject(Component.RentController) private readonly rentController: Controller,
     @inject(Component.UserController) private readonly userController: Controller,
     @inject(Component.ExceptionFilter) private readonly exceptionFilter: ExceptionFilter,
+    @inject(Component.AuthExceptionFilter) private readonly authExceptionFilter: ExceptionFilter,
+    @inject(Component.ParseTokenMiddleware) private readonly parseTokenMiddleware: Middleware,
   ) {
     this.express = express();
   }
@@ -35,6 +37,7 @@ export class RestApplication {
   }
 
   private async initFilters() {
+    this.express.use(this.authExceptionFilter.catch.bind(this.authExceptionFilter));
     this.express.use(this.exceptionFilter.catch.bind(this.exceptionFilter));
   }
 
@@ -51,6 +54,7 @@ export class RestApplication {
   private async initMiddleware() {
     this.express.use(express.json());
     this.express.use('/public', express.static(this.config.get('PUBLIC_DIR')));
+    this.express.use(this.parseTokenMiddleware.execute.bind(this.parseTokenMiddleware));
   }
 
   public async init() : Promise<void> {

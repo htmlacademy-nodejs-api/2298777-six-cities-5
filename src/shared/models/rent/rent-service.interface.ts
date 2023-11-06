@@ -8,7 +8,7 @@ export interface RentService {
   find(): Promise<DocumentType<RentEntity>[]>;
   deleteById(rentId: string): Promise<DocumentType<RentEntity> | null>;
   updateById(rentId: string, dto: UpdateRentDto): Promise<DocumentType<RentEntity> | null>;
-  exists(rentId: string): Promise<boolean>;
+  exists(id: string): Promise<boolean>;
   findNew(count: number): Promise<DocumentType<RentEntity>[]>;
   findDiscussed(count: number): Promise<DocumentType<RentEntity>[]>;
   findPremium(city: string, count: number): Promise<DocumentType<RentEntity>[]>;

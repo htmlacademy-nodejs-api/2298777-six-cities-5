@@ -8,8 +8,8 @@ import { CommentRdo, CommentService, CreateCommentDto, DEFAULT_COMMENT_COUNT } f
 import { fillDTO } from '../../helpers/common.js';
 import { ValidateObjectIdMiddleware } from '../../middleware/validate-objectid.middleware.js';
 import { ValidateDtoMiddleware } from '../../middleware/validate-dto.middleware.js';
-import { UserService } from '../user/index.js';
 import { DocumentExistsMidleware } from '../../middleware/document-exists.middleware.js';
+import { PrivateRouteMiddleware } from '../../middleware/private-route.middleware.js';
 
 @injectable()
 export class CommentController extends AbstractController {
@@ -17,7 +17,6 @@ export class CommentController extends AbstractController {
   constructor(
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.CommentService) private readonly commentService: CommentService,
-    @inject(Component.UserService) userService: UserService,
     @inject(Component.RentService) rentService: RentService,
   ) {
     super(logger);
@@ -41,10 +40,10 @@ export class CommentController extends AbstractController {
       method: HttpMethod.Post,
       handler: this.create,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('rentId'),
         new ValidateDtoMiddleware(CreateCommentDto),
         new DocumentExistsMidleware(rentService, 'rentId', 'Rent'),
-        new DocumentExistsMidleware(userService, 'userId', 'User'),
       ],
     });
   }
@@ -55,8 +54,8 @@ export class CommentController extends AbstractController {
     this.ok(res, resData);
   }
 
-  public async create({params, body}: Request<ParamsRentId, Record<string, unknown>, CreateCommentDto>, res: Response): Promise<void> {
-    const comment = await this.commentService.create({...body, rentId: params.rentId});
+  public async create({params, body, tokenPayload}: Request<ParamsRentId, Record<string, unknown>, CreateCommentDto>, res: Response): Promise<void> {
+    const comment = await this.commentService.create({...body, rentId: params.rentId, userId: tokenPayload.id});
     const resData = fillDTO(CommentRdo, comment);
     this.created(res, resData);
   }

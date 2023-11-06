@@ -1,7 +1,7 @@
 import { Command } from './command.interface.js';
 import { TSVFileReader } from '../../shared/libs/file-reader/index.js';
 import { getErrorMessage, createRent, getMongoURI } from '../../shared/helpers/index.js';
-import { Rent } from '../../shared/types/index.js';
+import { City, Good, Rent, Type } from '../../shared/types/index.js';
 import { Config, RestConfig, RestSchema } from '../../shared/libs/config/index.js';
 import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
 import { DbClient, MongoDBClient } from '../../shared/libs/db-client/index.js';
@@ -53,15 +53,15 @@ export class ImportCommand implements Command {
     const rent = await this.rentService.create({
       title: dto.title,
       description: dto.description,
-      city: dto.city,
+      city: dto.city as City,
       preview: dto.preview,
       images: dto.images,
       isPremium: dto.isPremium,
-      type: dto.type,
+      type: dto.type as Type,
       bedrooms: dto.bedrooms,
       maxAdults: dto.maxAdults,
       price: dto.price,
-      goods: dto.goods,
+      goods: dto.goods as Good[],
       userId: user.id,
       location: dto.location,
     });

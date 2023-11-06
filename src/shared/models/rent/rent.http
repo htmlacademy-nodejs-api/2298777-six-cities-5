@@ -1,14 +1,16 @@
 #getting rent by id
 
-GET http://localhost:4000/rents/653bd44d4d9094194efd2a45 HTTP/1.1
+GET http://localhost:4000/rents/6543f6d9806a536bbcce7db0 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDRkNWRlYWU4MjgyYTU2MmU5YTIyYSIsImVtYWlsIjoiTWFAZ21haWwuY29tIiwiaXNQcm8iOmZhbHNlLCJuYW1lIjoiYmFkdWsiLCJleHAiOjE2OTkwOTY0MjEsImlhdCI6MTY5OTAxMDAyMX0.L5lKfXFzIttZCWIOuASofFjOI33uTZQgPOsGI3Idnwg
 
 ###
-
+#eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c
 #getting all rents
 
-GET http://localhost:4000/rents HTTP/1.1
+GET http://localhost:4000/rents/?count HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDRkNWRlYWU4MjgyYTU2MmU5YTIyYSIsImVtYWlsIjoiTWFAZ21haWwuY29tIiwiaXNQcm8iOmZhbHNlLCJuYW1lIjoiYmFkdWsiLCJleHAiOjE2OTkwOTY0MjEsImlhdCI6MTY5OTAxMDAyMX0.L5lKfXFzIttZCWIOuASofFjOI33uTZQgPOsGI3Idnwg
 
 ###
 
@@ -17,6 +19,7 @@ Content-Type: application/json
 
 POST http://localhost:4000/rents HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c
 
 {
   "title": "badumddmdfsfgds",
@@ -48,8 +51,9 @@ Content-Type: application/json
 
 #updating rent
 
-PATCH http://localhost:4000/rents/653bd44d4d9094194efd2a45 HTTP/1.1
+PATCH http://localhost:4000/rents/6544a7d3a13b68e2ac3b08a6 HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c
 
 {
   "title": "updatedupdated",
@@ -60,21 +64,29 @@ Content-Type: application/json
 
 #delete rent
 
-DELETE http://localhost:4000/rents/653bd44d4d9094194efd2a45 HTTP/1.1
+DELETE http://localhost:4000/rents/6544a7d3a13b68e2ac3b08a6 HTTP/1.1
 Content-Type: application/json
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c
 ###
 
 # get premium rents
 
-GET http://localhost:4000/rents/?city=cologne&premium=true HTTP/1.1
+GET http://localhost:4000/rents/premium/?city=cologne HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c
 
 ###
 
 # get favorite rents
 
-GET http://localhost:4000/rents/?favorite=true HTTP/1.1
+GET http://localhost:4000/rents/favorites HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c
 
 ###
+
+# change favorite rent
+
+PATCH http://localhost:4000/rents/6543f6d9806a536bbcce7db7/favorite HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c

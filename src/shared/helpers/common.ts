@@ -14,3 +14,6 @@ export const fillDTO = <T, V>(dto: ClassConstructor<T>, plainObject: V) =>
 export const createErrorObject = (message: Error) => ({
   error: message,
 });
+
+export const makeCapitalized = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1);

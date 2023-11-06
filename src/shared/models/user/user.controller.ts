@@ -13,6 +13,9 @@ import { ValidateObjectIdMiddleware } from '../../middleware/validate-objectid.m
 import { ValidateDtoMiddleware } from '../../middleware/validate-dto.middleware.js';
 import { DocumentExistsMidleware } from '../../middleware/document-exists.middleware.js';
 import { UploadFileMiddleware } from '../../middleware/upload-file.middleware.js';
+import { AuthService } from '../auth/index.js';
+import { LoginRdo } from './rdo/login.rdo.js';
+import { PrivateRouteMiddleware } from '../../middleware/index.js';
 
 @injectable()
 export class UserController extends AbstractController {
@@ -21,6 +24,7 @@ export class UserController extends AbstractController {
     @inject(Component.Logger) protected readonly logger: Logger,
     @inject(Component.UserService) private readonly userService: UserService,
     @inject(Component.Config) private readonly config: Config<RestSchema>,
+    @inject(Component.AuthService) private readonly authService: AuthService,
   ) {
     super(logger);
 
@@ -28,7 +32,6 @@ export class UserController extends AbstractController {
 
     this.show = this.show.bind(this);
     this.create = this.create.bind(this);
-    this.delete = this.delete.bind(this);
     this.login = this.login.bind(this);
     this.auth = this.auth.bind(this);
 
@@ -38,7 +41,6 @@ export class UserController extends AbstractController {
       handler: this.login,
       middlewares: [new ValidateDtoMiddleware(LoginDto)]
     });
-    this.addRoute({path: '/login', method: HttpMethod.Delete, handler: this.delete});
     this.addRoute({path: '/auth', method: HttpMethod.Get, handler: this.auth});
     this.addRoute({
       path: '/users/:userId',
@@ -62,6 +64,7 @@ export class UserController extends AbstractController {
       method: HttpMethod.Post,
       handler: this.uploadAvatar,
       middlewares: [
+        new PrivateRouteMiddleware(),
         new ValidateObjectIdMiddleware('userId'),
         new UploadFileMiddleware(this.config.get('PUBLIC_DIR'), 'avatar'),
       ]
@@ -74,7 +77,10 @@ export class UserController extends AbstractController {
     this.ok(res, resData);
   }
 
-  public async create({body}: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>, res: Response): Promise<void> {
+  public async create({body, tokenPayload}: Request<Record<string, unknown>, Record<string, unknown>, CreateUserDto>, res: Response): Promise<void> {
+    if (tokenPayload) {
+      throw new HttpError(StatusCodes.FORBIDDEN, 'Forbidden', 'user controller');
+    }
     const user = await this.userService.findByEmail(body.email);
     if (user) {
       throw new HttpError(StatusCodes.CONFLICT, `User with email ${body.email} already exists.`, 'user controller');
@@ -84,25 +90,23 @@ export class UserController extends AbstractController {
     this.created(res, resData);
   }
 
-  public async delete(_req: Request, _res: Response): Promise<void> {
-    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'user controller');
+  public async login({body}: Request<Record<string, unknown>, Record<string, unknown>, LoginDto>, res: Response): Promise<void> {
+    const user = await this.authService.verify(body);
+    const token = await this.authService.authenticate(user);
+    const resData = fillDTO(LoginRdo, {
+      email: user.email,
+      token,
+    });
+    this.ok(res, resData);
   }
 
-  public async login({body}: Request<Record<string, unknown>, Record<string, unknown>, LoginDto>, _res: Response): Promise<void> {
-    const user = await this.userService.findByEmail(body.email);
-    console.log(user);
+  public async auth({tokenPayload}: Request, res: Response): Promise<void> {
+    const user = await this.userService.findByEmail(tokenPayload.email);
     if (!user) {
-      throw new HttpError(StatusCodes.NOT_FOUND, `User with email ${body.email} not found.`, 'user controller');
+      throw new HttpError(StatusCodes.UNAUTHORIZED, 'Unauthorized', 'UserController');
     }
-    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'user controller');
-  }
-
-  public async auth({headers}: Request<Record<string, unknown>, Record<string, unknown>>, _res: Response): Promise<void> {
-    const token = headers.authorization;
-    if (!token) {
-      throw new HttpError(StatusCodes.UNAUTHORIZED, 'Token not found.', 'user controller');
-    }
-    throw new HttpError(StatusCodes.NOT_IMPLEMENTED, 'Not implemented', 'user controller');
+    const resData = fillDTO(UserRdo, user);
+    this.ok(res, resData);
   }
 
   public async uploadAvatar(req: Request, res: Response): Promise<void> {
