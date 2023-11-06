@@ -1,0 +1,11 @@
+tags:
+  - favorites
+summary: Изменение статуса любимого предложения.
+description: Изменение статуса любимого предложения у авторизованого пользователя.
+responses:
+  "201":
+    description: Статус успешно изменен.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-rent.yml

@@ -1,0 +1,21 @@
+tags:
+  - users
+summary: Создание пользователя
+description: Создание нового пользователя.
+
+requestBody:
+  description: Информация для создания пользователя.
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/create-user.yml
+  required: true
+responses:
+  "201":
+    description: Пользователь успешно создан.
+    content:
+      application/json:
+        schema:
+          $ref: '#components/schemas/getUser'
+  "409":
+    description: Пользователь с таким email уже сушествует.

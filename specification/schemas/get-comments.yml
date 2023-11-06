@@ -1,0 +1,21 @@
+type: array
+items:
+  type: object
+  properties:
+    comment:
+      type: string
+    date:
+      type: string
+    rating:
+      type: integer
+    author:
+      type: object
+example:
+  - comment: blablabla
+    date: 2000-10-31T01:30:00.000-05:00
+    rating: 4
+    author:
+      name: bob
+      email: bob@gmail.com
+      avatar: default-avatar.jpg
+      isPro: true

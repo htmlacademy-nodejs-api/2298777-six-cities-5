@@ -1,0 +1,18 @@
+tags:
+  - rents
+summary: Создает предложение
+description: Создает новое предложение.
+requestBody:
+  description: Информация для создания предложения.
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/create-rent.yml
+  required: true
+responses:
+  "201":
+    description: Предложение успешно созданно.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-rent.yml

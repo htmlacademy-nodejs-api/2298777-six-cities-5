@@ -1,0 +1,66 @@
+openapi: 3.0.3
+info:
+  title: Six sities api
+  description: |-
+    * buss
+  license:
+    name: MIT
+    url: https://opensource.org/license/mit/
+  version: 1.0.0
+tags:
+  - name: rents
+    description: Действия с арендой
+  - name: users
+    description: Действия с пользователями
+  - name: comments
+    description: Действия с комментариями
+
+paths:
+  /rents:
+    get:
+      $ref: ./methods/get-rents.yml
+    post:
+      $ref: ./methods/post-rent.yml
+
+  /rents/{rentId}:
+    get:
+      $ref: ./methods/get-rent.yml
+
+    patch:
+      $ref: ./methods/update-rent.yml
+
+    delete:
+      $ref: ./methods/delete-rent.yml
+
+  /users/{userId}:
+    get:
+      $ref: ./methods/get-user.yml
+
+  /users:
+    post:
+      $ref: ./methods/post-user.yml
+
+  /login:
+    post:
+      $ref: ./methods/login.yml
+
+    delete:
+      $ref: ./methods/logout.yml
+
+  /auth:
+    get:
+      $ref: ./methods/check-auth.yml
+
+  /comments/{rentId}:
+    get:
+      $ref: ./methods/get-comments.yml
+
+    post:
+      $ref: ./methods/post-comment.yml
+
+  /favorites:
+    get:
+      $ref: ./methods/get-favorites.yml
+    post:
+      $ref: ./methods/post-favorites.yml
+

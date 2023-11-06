@@ -1,5 +1,6 @@
+import { RentEntity } from '../rent/rent.entity.js';
 import { User } from '../../types/index.js';
-import { defaultClasses, getModelForClass, prop, modelOptions } from '@typegoose/typegoose';
+import { defaultClasses, getModelForClass, prop, modelOptions, Ref } from '@typegoose/typegoose';
 import { createSHA256 } from '../../helpers/index.js';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
@@ -21,10 +22,13 @@ export class UserEntity extends defaultClasses.TimeStamps implements User{
   public avatar: string;
 
   @prop({required: true, minlength: 5})
-  private _password?: string;
+  private password?: string;
 
   @prop({required: false, default: false})
   public isPro: boolean;
+
+  @prop({required: false, ref: () => RentEntity})
+  public readonly favoriteRentsIds: Ref<() => RentEntity>[];
 
   constructor(data: User) {
     super();
@@ -36,11 +40,11 @@ export class UserEntity extends defaultClasses.TimeStamps implements User{
   }
 
   public setPassword(line: string, salt: string) {
-    this._password = createSHA256(line, salt);
+    this.password = createSHA256(line, salt);
   }
 
-  public get password() {
-    return this._password;
+  public getPassword() {
+    return this.password;
   }
 }
 

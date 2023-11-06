@@ -1,0 +1,24 @@
+tags:
+  - comments
+summary: Создание комментария
+description: Добавление нового комментария для указаного объявления.
+requestBody:
+  description: Информация для создания комментария
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/create-comment.yml
+  required: true
+responses:
+  "201":
+    description: Комментарий успешно создан.
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/get-comment.yml
+parameters:
+  - in: path
+    name: rentId
+    required: true
+    schema:
+      type: string

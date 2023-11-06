@@ -1,0 +1,6 @@
+type: array
+items:
+  anyOf:
+    - $ref: ./get-rent.yml
+    - $ref: ./get-rent.yml
+    - $ref: ./get-rent.yml

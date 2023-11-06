@@ -12,4 +12,5 @@ export type MockServerData = {
     passwords: string[];
   };
   locations: string[];
+  comments: string[];
 }

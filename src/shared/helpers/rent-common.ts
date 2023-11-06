@@ -1,8 +1,10 @@
+import { getRandomNumber } from './random.js';
+
 export const createRent = (line: string) => {
   const [title, description, date,
-    city, preview, images, isPremium, isFavorite,
-    rating, type, bedrooms, maxAdults, price, goods,
-    name, email, avatar, password, isPro, location] = line.split('\t');
+    city, preview, images, isPremium,
+    type, bedrooms, maxAdults, price, goods,
+    name, email, avatar, password, isPro, location, comments] = line.split('\t');
 
 
   return {
@@ -13,8 +15,6 @@ export const createRent = (line: string) => {
     preview,
     images: images.split('@@@').map((image) => image),
     isPremium: isPremium === 'true',
-    isFavorite: isFavorite === 'true',
-    rating: Number.parseInt(rating, 10),
     type,
     bedrooms: parseInt(bedrooms, 10),
     maxAdults: parseInt(maxAdults, 10),
@@ -30,6 +30,11 @@ export const createRent = (line: string) => {
     location: {
       latitude: parseFloat(location.split(' ')[0]),
       longitude: parseFloat(location.split(' ')[1]),
-    }
+    },
+    comments: comments.trim() === '' ? [] : comments.split('@@@').map((comment) => ({
+      comment,
+      date: new Date(),
+      rating: getRandomNumber(1, 5),
+    }))
   };
 };
