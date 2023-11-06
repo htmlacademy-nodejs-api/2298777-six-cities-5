@@ -7,7 +7,6 @@
 .idea/*
 test.tsv
 /public/
-/frontend
 
 .DS_Store
 coverage
