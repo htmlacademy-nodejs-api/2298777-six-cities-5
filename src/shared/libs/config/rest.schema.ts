@@ -13,6 +13,7 @@ export type RestSchema = {
   DB_NAME: string;
   DB_RETRY_ATTEMPTS: number;
   DB_RETRY_DELAY: number;
+  PUBLIC_DIR: string;
 }
 
 export const configRestSchema = convict<RestSchema>({
@@ -69,5 +70,11 @@ export const configRestSchema = convict<RestSchema>({
     format: Number,
     env: 'DB_RETRY_DELAY',
     default: 1000,
+  },
+  PUBLIC_DIR: {
+    doc: 'Path to public dir',
+    format: String,
+    env: 'PUBLIC_DIR',
+    default: null,
   }
 });

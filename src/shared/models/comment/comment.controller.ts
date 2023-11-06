@@ -42,9 +42,9 @@ export class CommentController extends AbstractController {
       handler: this.create,
       middlewares: [
         new ValidateObjectIdMiddleware('rentId'),
+        new ValidateDtoMiddleware(CreateCommentDto),
         new DocumentExistsMidleware(rentService, 'rentId', 'Rent'),
         new DocumentExistsMidleware(userService, 'userId', 'User'),
-        new ValidateDtoMiddleware(CreateCommentDto)
       ],
     });
   }
