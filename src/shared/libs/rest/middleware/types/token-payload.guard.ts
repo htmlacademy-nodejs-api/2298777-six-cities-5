@@ -1,4 +1,4 @@
-import { TokenPayload } from '../../models/auth/index.js';
+import { TokenPayload } from '../../../../models/auth/index.js';
 
 export const isTokenPayload = (payload: unknown): payload is TokenPayload => (
   (typeof payload === 'object' && payload !== null) &&

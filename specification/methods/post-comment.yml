@@ -2,6 +2,10 @@ tags:
   - comments
 summary: Создание комментария
 description: Добавление нового комментария для указаного объявления.
+security:
+  - bearerAuth:
+      - read
+      - write
 requestBody:
   description: Информация для создания комментария
   content:

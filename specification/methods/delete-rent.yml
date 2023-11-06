@@ -2,6 +2,10 @@ tags:
   - rents
 summary: Удаляет предложение
 description: Удаляет указанное предложение.
+security:
+  - bearerAuth:
+      - read
+      - write
 responses:
   "204":
     description: Предложение успешно удалено.

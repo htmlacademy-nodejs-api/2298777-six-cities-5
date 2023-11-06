@@ -6,10 +6,10 @@ import { Request, Response } from 'express';
 import { ParamsRentId, RentService } from '../rent/index.js';
 import { CommentRdo, CommentService, CreateCommentDto, DEFAULT_COMMENT_COUNT } from './index.js';
 import { fillDTO } from '../../helpers/common.js';
-import { ValidateObjectIdMiddleware } from '../../middleware/validate-objectid.middleware.js';
-import { ValidateDtoMiddleware } from '../../middleware/validate-dto.middleware.js';
-import { DocumentExistsMidleware } from '../../middleware/document-exists.middleware.js';
-import { PrivateRouteMiddleware } from '../../middleware/private-route.middleware.js';
+import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/validate-objectid.middleware.js';
+import { ValidateDtoMiddleware } from '../../libs/rest/middleware/validate-dto.middleware.js';
+import { DocumentExistsMidleware } from '../../libs/rest/middleware/document-exists.middleware.js';
+import { PrivateRouteMiddleware } from '../../libs/rest/middleware/private-route.middleware.js';
 
 @injectable()
 export class CommentController extends AbstractController {

@@ -1,8 +1,7 @@
 #getting rent by id
 
-GET http://localhost:4000/rents/6543f6d9806a536bbcce7db0 HTTP/1.1
+GET http://localhost:4000/rents/6548a50c44964b95b6aba530 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDRkNWRlYWU4MjgyYTU2MmU5YTIyYSIsImVtYWlsIjoiTWFAZ21haWwuY29tIiwiaXNQcm8iOmZhbHNlLCJuYW1lIjoiYmFkdWsiLCJleHAiOjE2OTkwOTY0MjEsImlhdCI6MTY5OTAxMDAyMX0.L5lKfXFzIttZCWIOuASofFjOI33uTZQgPOsGI3Idnwg
 
 ###
 #eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c
@@ -19,7 +18,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDRkNWRlYWU4MjgyYTU2MmU5Y
 
 POST http://localhost:4000/rents HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxMTg5ZCIsImVtYWlsIjoiYm9iQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MDQwNDgyLCJpYXQiOjE2OTg5NTQwODJ9.KJFpO1mHaD3qUVrkTkuk5Ac_z-vqP-lwLslhray4h5c
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDhhMjdlMjMwNGNmZmNkZjEwY2Q3MyIsImVtYWlsIjoiTWFnb3RzQGdtYWlsLmNvbSIsImlzUHJvIjpmYWxzZSwibmFtZSI6ImJhZHVrIiwiZXhwIjoxNjk5MzQ1NDEzLCJpYXQiOjE2OTkyNTkwMTN9.4NK1YIgiCviti4u2pEdpNeCoNvrw8xj7y0KrccXA_4k
+
 
 {
   "title": "badumddmdfsfgds",
@@ -39,7 +39,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjY1NDNmYjVjYmEyNjVlZDRmYzkxM
       "Washer",
       "Fridge"
   ],
-  "userId": "653bd44d4d9094194efd2a2f",
   "location": {
       "latitude": 48.85661,
       "longitude": 2.351499

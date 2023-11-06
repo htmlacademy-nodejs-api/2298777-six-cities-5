@@ -9,13 +9,13 @@ import { UserRdo } from './rdo/user.rdo.js';
 import { StatusCodes } from 'http-status-codes';
 import { Config, RestSchema } from '../../libs/config/index.js';
 import { ParamsUserId } from './index.js';
-import { ValidateObjectIdMiddleware } from '../../middleware/validate-objectid.middleware.js';
-import { ValidateDtoMiddleware } from '../../middleware/validate-dto.middleware.js';
-import { DocumentExistsMidleware } from '../../middleware/document-exists.middleware.js';
-import { UploadFileMiddleware } from '../../middleware/upload-file.middleware.js';
+import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/validate-objectid.middleware.js';
+import { ValidateDtoMiddleware } from '../../libs/rest/middleware/validate-dto.middleware.js';
+import { DocumentExistsMidleware } from '../../libs/rest/middleware/document-exists.middleware.js';
+import { UploadFileMiddleware } from '../../libs/rest/middleware/upload-file.middleware.js';
 import { AuthService } from '../auth/index.js';
 import { LoginRdo } from './rdo/login.rdo.js';
-import { PrivateRouteMiddleware } from '../../middleware/index.js';
+import { PrivateRouteMiddleware } from '../../libs/rest/middleware/index.js';
 
 @injectable()
 export class UserController extends AbstractController {
@@ -60,12 +60,11 @@ export class UserController extends AbstractController {
       ]
     });
     this.addRoute({
-      path: '/users/:userId/avatar',
+      path: '/users/avatar',
       method: HttpMethod.Post,
       handler: this.uploadAvatar,
       middlewares: [
         new PrivateRouteMiddleware(),
-        new ValidateObjectIdMiddleware('userId'),
         new UploadFileMiddleware(this.config.get('PUBLIC_DIR'), 'avatar'),
       ]
     });
@@ -86,7 +85,14 @@ export class UserController extends AbstractController {
       throw new HttpError(StatusCodes.CONFLICT, `User with email ${body.email} already exists.`, 'user controller');
     }
     const newUser = await this.userService.create(body, this.config.get('SALT'));
-    const resData = fillDTO(UserRdo, newUser);
+    const token = await this.authService.authenticate(newUser);
+    const resData = fillDTO(LoginRdo, {
+      name: newUser.name,
+      email: newUser.email,
+      avatar: newUser.getAvatar(),
+      isPro: newUser.isPro,
+      token,
+    });
     this.created(res, resData);
   }
 
@@ -94,7 +100,10 @@ export class UserController extends AbstractController {
     const user = await this.authService.verify(body);
     const token = await this.authService.authenticate(user);
     const resData = fillDTO(LoginRdo, {
+      name: user.name,
       email: user.email,
+      avatar: user.getAvatar(),
+      isPro: user.isPro,
       token,
     });
     this.ok(res, resData);
@@ -109,9 +118,12 @@ export class UserController extends AbstractController {
     this.ok(res, resData);
   }
 
-  public async uploadAvatar(req: Request, res: Response): Promise<void> {
-    this.created(res, {
-      filepath: req.file?.path,
-    });
+  public async uploadAvatar({tokenPayload, file}: Request, res: Response): Promise<void> {
+    const user = await this.userService.updateById(tokenPayload.id, {avatar: file?.filename});
+    if (!user) {
+      throw new HttpError(StatusCodes.NOT_FOUND, 'Unauthorized', 'UserController');
+    }
+    const resData = fillDTO(UserRdo, user);
+    this.created(res, resData);
   }
 }

@@ -3,14 +3,19 @@ import { Controller } from './index.js';
 import { Route } from '../index.js';
 import { Logger } from '../../logger/index.js';
 import { StatusCodes } from 'http-status-codes';
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import asyncHandler from 'express-async-handler';
+import { PathInterceptor } from '../interceptor/path-interceptor.js';
+import { Component } from '../../../types/component.enum.js';
 
 const DEFAULT_CONTENT_TYPE = 'application/json';
 
 @injectable()
 export abstract class AbstractController implements Controller {
   private readonly _router: Router;
+
+  @inject(Component.PathInterceptor)
+  private pathInterceptor: PathInterceptor;
 
   constructor(
     protected readonly logger: Logger
@@ -36,7 +41,7 @@ export abstract class AbstractController implements Controller {
     res
       .type(DEFAULT_CONTENT_TYPE)
       .status(statusCode)
-      .json(data);
+      .json(this.pathInterceptor.execute(data as Record<string, unknown>));
   }
 
   public created<T>(res: Response, data: T): void {

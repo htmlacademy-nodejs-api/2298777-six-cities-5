@@ -1,4 +1,4 @@
-import { IsBoolean, IsEnum, IsMongoId, IsObject, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
+import { IsBoolean, IsEnum, IsObject, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
 import { City, Good, Type } from '../../../types/index.js';
 import { CreateRentMessage } from './create-rent.message.js';
 
@@ -41,7 +41,6 @@ export class CreateRentDto {
   @IsEnum(Good, {each: true, message: CreateRentMessage.goods.isEnum})
   public goods: Good[];
 
-  @IsMongoId({message: CreateRentMessage.userId.isMongoId})
   public userId: string;
 
   @IsObject({message: CreateRentMessage.location.isObject})

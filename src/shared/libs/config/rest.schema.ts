@@ -15,6 +15,9 @@ export type RestSchema = {
   DB_RETRY_DELAY: number;
   PUBLIC_DIR: string;
   JWT_SECRET: string;
+  PROTOCOL: string;
+  HOST: string;
+  STATIC_DIR: string;
 }
 
 export const configRestSchema = convict<RestSchema>({
@@ -83,5 +86,23 @@ export const configRestSchema = convict<RestSchema>({
     format: String,
     env: 'JWT_SECRET',
     default: null,
-  }
+  },
+  PROTOCOL: {
+    doc: 'Protocol for url',
+    format: String,
+    env: 'PROTOCOL',
+    default: 'http',
+  },
+  HOST: {
+    doc: 'Host for url',
+    format: String,
+    env: 'HOST',
+    default: 'localhost',
+  },
+  STATIC_DIR: {
+    doc: 'Path to static dir',
+    format: String,
+    env: 'STATIC_DIR',
+    default: null,
+  },
 });

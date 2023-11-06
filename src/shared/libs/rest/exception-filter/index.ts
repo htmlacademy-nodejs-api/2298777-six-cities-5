@@ -1,2 +1,2 @@
-export * from './default-exception-filter.js';
+export * from './app-exception-filter.js';
 export * from './exception-filter.interface.js';

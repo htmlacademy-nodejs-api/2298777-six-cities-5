@@ -4,6 +4,7 @@ import { inject, injectable } from 'inversify';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';
 import { Types } from 'mongoose';
+import { DEFAULT_AVATAR } from '../../libs/rest/static.const.js';
 
 @injectable()
 export class DefaultUserService implements UserService {
@@ -15,7 +16,9 @@ export class DefaultUserService implements UserService {
 
   public async create(dto: CreateUserDto, salt: string): Promise<DocumentType<UserEntity>> {
     const user = new UserEntity(dto);
+
     user.setPassword(dto.password, salt);
+    user.setAvatar(DEFAULT_AVATAR);
 
     const result = await this.userModel.create(user);
 
@@ -39,7 +42,15 @@ export class DefaultUserService implements UserService {
   }
 
   public async updateById(id: string, dto: UpdateUserDto): Promise<DocumentType<UserEntity> | null> {
-    return this.userModel.findByIdAndUpdate(id, dto, {new: true}).exec();
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      return null;
+    }
+    if (dto.avatar) {
+      user?.setAvatar(dto.avatar);
+    }
+    await user?.updateOne(dto, {new: true}).exec();
+    return user;
   }
 
   public async updateFavorite(id: string, rentId: string, action: typeof Action[keyof typeof Action]): Promise<DocumentType<UserEntity> | null> {

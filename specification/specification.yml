@@ -61,6 +61,18 @@ paths:
   /favorites:
     get:
       $ref: ./methods/get-favorites.yml
+
+  /{rentId}/favorite:
     post:
       $ref: ./methods/post-favorites.yml
 
+  /premium:
+    get:
+      $ref: ./methods/get-premium.yml
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

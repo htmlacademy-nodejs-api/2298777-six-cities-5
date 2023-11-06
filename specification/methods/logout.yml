@@ -1,6 +1,11 @@
 tags:
   - login
 summary: Выходит из закрытой части приложения.
+security:
+  - bearerAuth:
+      - read
+      - write
 responses:
   "204":
     description: Выход успешно выполнен.
+

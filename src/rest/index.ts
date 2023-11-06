@@ -1,2 +1,2 @@
-export * from './container/main.container.js';
+export * from './container/index.js';
 export * from './rest-application.js';
