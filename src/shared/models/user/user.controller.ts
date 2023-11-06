@@ -9,6 +9,9 @@ import { UserRdo } from './rdo/user.rdo.js';
 import { StatusCodes } from 'http-status-codes';
 import { Config, RestSchema } from '../../libs/config/index.js';
 import { ParamsUserId } from './index.js';
+import { ValidateObjectIdMiddleware } from '../../middleware/validate-objectid.middleware.js';
+import { ValidateDtoMiddleware } from '../../middleware/validate-dto.middleware.js';
+import { DocumentExistsMidleware } from '../../middleware/document-exists.middleware.js';
 
 @injectable()
 export class UserController extends AbstractController {
@@ -22,25 +25,39 @@ export class UserController extends AbstractController {
 
     logger.info('Registering routes for users');
 
-    this.get = this.get.bind(this);
+    this.show = this.show.bind(this);
     this.create = this.create.bind(this);
     this.delete = this.delete.bind(this);
     this.login = this.login.bind(this);
     this.auth = this.auth.bind(this);
 
-    this.addRoute({path: '/login', method: HttpMethod.Get, handler: this.login});
+    this.addRoute({
+      path: '/login',
+      method: HttpMethod.Get,
+      handler: this.login,
+      middlewares: [new ValidateDtoMiddleware(LoginDto)]
+    });
     this.addRoute({path: '/login', method: HttpMethod.Delete, handler: this.delete});
     this.addRoute({path: '/auth', method: HttpMethod.Get, handler: this.auth});
-    this.addRoute({path: '/users/:userId', method: HttpMethod.Get, handler: this.get});
-    this.addRoute({path: '/users/', method: HttpMethod.Post, handler: this.create});
+    this.addRoute({
+      path: '/users/:userId',
+      method: HttpMethod.Get,
+      handler: this.show,
+      middlewares: [
+        new ValidateObjectIdMiddleware('userId'),
+        new DocumentExistsMidleware(userService, 'userId', 'User')
+      ]
+    });
+    this.addRoute({
+      path: '/users/',
+      method: HttpMethod.Post,
+      handler: this.create,
+      middlewares: [new ValidateDtoMiddleware(CreateUserDto)]
+    });
   }
 
-  public async get({params}: Request<ParamsUserId>, res: Response): Promise<void> {
-    const userId = params.userId;
-    const user = await this.userService.findById(userId);
-    if (!user) {
-      throw new HttpError(StatusCodes.NOT_FOUND, `User with id ${userId} not found.`, 'user controller');
-    }
+  public async show({params}: Request<ParamsUserId>, res: Response): Promise<void> {
+    const user = await this.userService.findById(params.userId);
     const resData = fillDTO(UserRdo, user);
     this.ok(res, resData);
   }
