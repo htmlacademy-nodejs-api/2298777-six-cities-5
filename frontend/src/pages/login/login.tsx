@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import type { CityName, UserAuth } from '../../types/types';
 import { useAppDispatch } from '../../hooks';
 import { loginUser } from '../../store/action';
-import { getRandomElement } from '../../utils';
+import { getRandomElement } from '../../utils/utils';
 import { AppRoute, CITIES } from '../../const';
 import { setCity } from '../../store/site-process/site-process';
 

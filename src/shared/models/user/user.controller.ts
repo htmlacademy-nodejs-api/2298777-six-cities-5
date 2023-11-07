@@ -110,7 +110,10 @@ export class UserController extends AbstractController {
   }
 
   public async auth({tokenPayload}: Request, res: Response): Promise<void> {
-    const user = await this.userService.findByEmail(tokenPayload.email);
+    if (!tokenPayload) {
+      throw new HttpError(StatusCodes.UNAUTHORIZED, 'Unauthorized', 'UserController');
+    }
+    const user = await this.userService.findById(tokenPayload.id);
     if (!user) {
       throw new HttpError(StatusCodes.UNAUTHORIZED, 'Unauthorized', 'UserController');
     }

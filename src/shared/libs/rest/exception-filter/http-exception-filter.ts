@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { StatusCodes } from 'http-status-codes';
 import { injectable, inject } from 'inversify';
 import { createErrorObject } from '../../../helpers/common.js';
 import { Component } from '../../../types/component.enum.js';
@@ -22,7 +21,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     }
 
     res
-      .status(StatusCodes.BAD_REQUEST)
+      .status(error.httpStatusCode)
       .json(createErrorObject(AppError.CommonError, error.message));
   }
 }

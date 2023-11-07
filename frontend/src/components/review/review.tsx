@@ -1,6 +1,6 @@
 import type { Comment } from '../../types/types';
 
-import { formatDate, getStarsWidth } from '../../utils';
+import { formatDate, getStarsWidth } from '../../utils/utils';
 
 const Review = ({ comment, date, rating, user }: Comment) => {
   const { name, avatarUrl } = user;

@@ -5,7 +5,7 @@ import { City, NewOffer, Offer } from '../../types/types';
 
 import LocationPicker from '../location-picker/location-picker';
 import { CITIES, CityLocation, GOODS, TYPES } from '../../const';
-import { capitalize } from '../../utils';
+import { capitalize } from '../../utils/utils';
 
 enum FormFieldName {
   title = 'title',

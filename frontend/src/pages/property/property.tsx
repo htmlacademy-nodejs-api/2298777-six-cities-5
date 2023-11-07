@@ -13,7 +13,7 @@ import {
   deleteOffer,
 } from '../../store/action';
 import Spinner from '../../components/spinner/spinner';
-import { capitalize, getStarsWidth, pluralize } from '../../utils';
+import { capitalize, getStarsWidth, pluralize } from '../../utils/utils';
 import { NewComment } from '../../types/types';
 import { getIsAuthorized } from '../../store/user-process/selectors';
 import {
