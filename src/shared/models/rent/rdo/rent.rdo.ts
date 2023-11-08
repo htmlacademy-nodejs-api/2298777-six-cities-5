@@ -5,6 +5,9 @@ import { City, Good, Type as TypeEnum } from '../../../types/entities.enum.js';
 
 export class RentRdo {
   @Expose()
+  public id: string;
+
+  @Expose()
   public title: string;
 
   @Expose()
