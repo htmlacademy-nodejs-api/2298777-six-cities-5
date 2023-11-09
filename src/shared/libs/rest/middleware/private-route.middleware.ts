@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import { NextFunction, Request, Response } from 'express';
-import { Middleware } from './middleware.interface.js';
+import { Middleware } from './index.js';
 import { HttpError } from '../index.js';
 
 export class PrivateRouteMiddleware implements Middleware {

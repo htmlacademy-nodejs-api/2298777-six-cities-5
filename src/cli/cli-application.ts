@@ -1,5 +1,5 @@
 import { Command } from './commands/command.interface.js';
-import { CommandParser } from './command-parser.js';
+import { CommandParser } from './index.js';
 import chalk from 'chalk';
 
 type CommandColection = Record<string, Command>;

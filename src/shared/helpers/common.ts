@@ -2,8 +2,9 @@ import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { ValidationError } from 'class-validator';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ValidationErrorType } from '../libs/rest/types/validation-erorr.type.js';
+import { ValidationErrorType } from '../libs/rest/index.js';
 import { AppError } from '../libs/rest/types/app-error.enum.js';
+
 
 export const getErrorMessage = (error: unknown) =>
   error instanceof Error ? error.message : '';

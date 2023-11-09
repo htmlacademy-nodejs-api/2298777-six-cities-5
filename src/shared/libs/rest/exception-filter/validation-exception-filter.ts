@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { injectable, inject } from 'inversify';
-import { createErrorObject } from '../../../helpers/common.js';
-import { Component } from '../../../types/component.enum.js';
-import { ExceptionFilter } from './exception-filter.interface.js';
+import { createErrorObject } from '../../../helpers/index.js';
+import { Component } from '../../../types/index.js';
+import { ExceptionFilter } from './index.js';
 import { Logger } from '../../logger/index.js';
 import { ValidationError } from '../index.js';
 import { AppError } from '../types/app-error.enum.js';

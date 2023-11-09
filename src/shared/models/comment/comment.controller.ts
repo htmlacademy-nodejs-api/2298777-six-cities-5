@@ -1,15 +1,15 @@
 import { inject, injectable } from 'inversify';
 import { AbstractController, HttpMethod } from '../../libs/rest/index.js';
 import { Logger } from '../../libs/logger/index.js';
-import { Component } from '../../types/component.enum.js';
+import { Component } from '../../types/index.js';
 import { Request, Response } from 'express';
 import { ParamsRentId, RentService } from '../rent/index.js';
 import { CommentRdo, CommentService, CreateCommentDto, DEFAULT_COMMENT_COUNT } from './index.js';
-import { fillDTO } from '../../helpers/common.js';
-import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/validate-objectid.middleware.js';
-import { ValidateDtoMiddleware } from '../../libs/rest/middleware/validate-dto.middleware.js';
-import { DocumentExistsMidleware } from '../../libs/rest/middleware/document-exists.middleware.js';
-import { PrivateRouteMiddleware } from '../../libs/rest/middleware/private-route.middleware.js';
+import { fillDTO } from '../../helpers/index.js';
+import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/index.js';
+import { ValidateDtoMiddleware } from '../../libs/rest/middleware/index.js';
+import { DocumentExistsMidleware } from '../../libs/rest/middleware/index.js';
+import { PrivateRouteMiddleware } from '../../libs/rest/middleware/index.js';
 
 @injectable()
 export class CommentController extends AbstractController {

@@ -1,5 +1,10 @@
 import { inject, injectable } from 'inversify';
-import { CreateRentDto, RentEntity, RentModel, RentService, UpdateRentDto, DEFAULT_RENT_COUNT } from './index.js';
+import { CreateRentDto,
+  RentEntity,
+  RentModel,
+  RentService,
+  UpdateRentDto,
+  DEFAULT_RENT_COUNT } from './index.js';
 import { Logger } from '../../libs/logger/index.js';
 import { DocumentType } from '@typegoose/typegoose';
 import { Sort, Component } from '../../types/index.js';

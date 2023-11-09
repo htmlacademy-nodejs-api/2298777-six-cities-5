@@ -6,7 +6,10 @@ import { Config, RestConfig, RestSchema } from '../../shared/libs/config/index.j
 import { ConsoleLogger, Logger } from '../../shared/libs/logger/index.js';
 import { DbClient, MongoDBClient } from '../../shared/libs/db-client/index.js';
 import { DefaultUserService, UserModel, UserService } from '../../shared/models/user/index.js';
-import { CommentModel, CommentService, DefaultCommentService } from '../../shared/models/comment/index.js';
+import { CommentModel,
+  CommentService,
+  DefaultCommentService
+} from '../../shared/models/comment/index.js';
 import { DefaultRentService, RentModel, RentService } from '../../shared/models/rent/index.js';
 
 export class ImportCommand implements Command {
