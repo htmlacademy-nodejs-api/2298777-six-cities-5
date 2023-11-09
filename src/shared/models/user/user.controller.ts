@@ -37,7 +37,7 @@ export class UserController extends AbstractController {
 
     this.addRoute({
       path: '/login',
-      method: HttpMethod.Get,
+      method: HttpMethod.Post,
       handler: this.login,
       middlewares: [new ValidateDtoMiddleware(LoginDto)]
     });
