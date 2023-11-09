@@ -6,7 +6,7 @@ import { Logger } from '../../libs/logger/index.js';
 import { AuthError } from './auth.error.js';
 
 @injectable()
-export class DeffaultAuthExceptionFilter implements ExceptionFilter {
+export class DefaultAuthExceptionFilter implements ExceptionFilter {
   constructor(
     @inject(Component.Logger) private readonly logger: Logger,
   ) {

@@ -1,11 +1,11 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
-import { RestApplication } from '../rest-application.js';
+import { RestApplication } from '../index.js';
 import { Component } from '../../shared/types/index.js';
 import { RestConfig, RestSchema, Config } from '../../shared/libs/config/index.js';
 import { Logger, PinoLogger } from '../../shared/libs/logger/index.js';
-import { DbClient } from '../../shared/libs/db-client/db-client.interface.js';
-import { MongoDBClient } from '../../shared/libs/db-client/mongo.db-client.js';
+import { DbClient } from '../../shared/libs/db-client/index.js';
+import { MongoDBClient } from '../../shared/libs/db-client/index.js';
 
 export const createRestContainer = () => {
   const container = new Container();

@@ -1,9 +1,10 @@
 import { MinLength, MaxLength, IsString, IsBoolean, IsMongoId, IsOptional } from 'class-validator';
 import { CreateUserMessages } from './create-user.messages.js';
+import { UserDtoConst } from './user-dto.const.js';
 
 export class UpdateUserDto {
-  @MinLength(1, {message: CreateUserMessages.name.minLength})
-  @MaxLength(15, {message: CreateUserMessages.name.maxLength})
+  @MinLength(UserDtoConst.MinLengthName, {message: CreateUserMessages.name.minLength})
+  @MaxLength(UserDtoConst.MaxLengthName, {message: CreateUserMessages.name.maxLength})
   @IsOptional()
   public name?: string;
 

@@ -3,16 +3,21 @@ import { AbstractController, HttpError, HttpMethod } from '../../libs/rest/index
 import { Logger } from '../../libs/logger/index.js';
 import { City, Component } from '../../types/index.js';
 import { Request, Response } from 'express';
-import { CreateRentDto, DEFAULT_RENT_COUNT, DEFFAULT_RENT_PREMIUM_COUNT, RentEntity, RentService, UpdateRentDto } from './index.js';
-import { fillDTO, makeCapitalized } from '../../helpers/common.js';
+import { CreateRentDto,
+  DEFAULT_RENT_COUNT,
+  DEFFAULT_RENT_PREMIUM_COUNT,
+  RentEntity,
+  RentService,
+  UpdateRentDto } from './index.js';
+import { fillDTO, makeCapitalized } from '../../helpers/index.js';
 import { RentRdo } from './rdo/rent.rdo.js';
 import { ParamsRentId } from './index.js';
 import { QueryRent } from './type/query-rent.type.js';
-import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/validate-objectid.middleware.js';
-import { ValidateDtoMiddleware } from '../../libs/rest/middleware/validate-dto.middleware.js';
-import { DocumentExistsMidleware } from '../../libs/rest/middleware/document-exists.middleware.js';
-import { PrivateRouteMiddleware } from '../../libs/rest/middleware/private-route.middleware.js';
-import { UserService } from '../user/user-service.interface.js';
+import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/index.js';
+import { ValidateDtoMiddleware } from '../../libs/rest/middleware/index.js';
+import { DocumentExistsMidleware } from '../../libs/rest/middleware/index.js';
+import { PrivateRouteMiddleware } from '../../libs/rest/middleware/index.js';
+import { UserService } from '../user/index.js';
 import { StatusCodes } from 'http-status-codes';
 import { DocumentType } from '@typegoose/typegoose';
 import { TokenPayload } from '../auth/index.js';

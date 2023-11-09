@@ -9,10 +9,10 @@ import { UserRdo } from './rdo/user.rdo.js';
 import { StatusCodes } from 'http-status-codes';
 import { Config, RestSchema } from '../../libs/config/index.js';
 import { ParamsUserId } from './index.js';
-import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/validate-objectid.middleware.js';
-import { ValidateDtoMiddleware } from '../../libs/rest/middleware/validate-dto.middleware.js';
-import { DocumentExistsMidleware } from '../../libs/rest/middleware/document-exists.middleware.js';
-import { UploadFileMiddleware } from '../../libs/rest/middleware/upload-file.middleware.js';
+import { ValidateObjectIdMiddleware } from '../../libs/rest/middleware/index.js';
+import { ValidateDtoMiddleware } from '../../libs/rest/middleware/index.js';
+import { DocumentExistsMidleware } from '../../libs/rest/middleware/index.js';
+import { UploadFileMiddleware } from '../../libs/rest/middleware/index.js';
 import { AuthService } from '../auth/index.js';
 import { LoginRdo } from './rdo/login.rdo.js';
 import { PrivateRouteMiddleware } from '../../libs/rest/middleware/index.js';
@@ -37,7 +37,7 @@ export class UserController extends AbstractController {
 
     this.addRoute({
       path: '/login',
-      method: HttpMethod.Get,
+      method: HttpMethod.Post,
       handler: this.login,
       middlewares: [new ValidateDtoMiddleware(LoginDto)]
     });

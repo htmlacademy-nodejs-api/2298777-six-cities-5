@@ -1,5 +1,10 @@
 import { DocumentType } from '@typegoose/typegoose';
-import { CreateUserDto, UserEntity, UserModel, UserService, UpdateUserDto, Action } from './index.js';
+import { CreateUserDto,
+  UserEntity,
+  UserModel,
+  UserService,
+  UpdateUserDto,
+  Action } from './index.js';
 import { inject, injectable } from 'inversify';
 import { Logger } from '../../libs/logger/index.js';
 import { Component } from '../../types/index.js';

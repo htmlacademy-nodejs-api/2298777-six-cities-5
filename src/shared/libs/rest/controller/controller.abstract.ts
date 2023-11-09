@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import { inject, injectable } from 'inversify';
 import asyncHandler from 'express-async-handler';
 import { PathInterceptor } from '../interceptor/path-interceptor.js';
-import { Component } from '../../../types/component.enum.js';
+import { Component } from '../../../types/index.js';
 
 const DEFAULT_CONTENT_TYPE = 'application/json';
 

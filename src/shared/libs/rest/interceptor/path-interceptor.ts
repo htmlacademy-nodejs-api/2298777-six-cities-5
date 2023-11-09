@@ -1,9 +1,9 @@
 import { inject, injectable } from 'inversify';
-import { Component } from '../../../types/component.enum.js';
-import { Logger } from '../../logger/logger.interface.js';
+import { Component } from '../../../types/index.js';
+import { Logger } from '../../logger/index.js';
 import { Config, RestSchema } from '../../config/index.js';
 import { DEFAULT_AVATAR, RESOURCE_FIELDS } from '../static.const.js';
-import { getFullUrl } from '../../../helpers/common.js';
+import { getFullUrl } from '../../../helpers/index.js';
 import { isArray } from 'class-validator';
 
 @injectable()

@@ -1,15 +1,16 @@
 import { IsBoolean, IsEnum, IsObject, IsOptional, IsString, Max, MaxLength, Min, MinLength } from 'class-validator';
 import { City, Good, Type } from '../../../types/entities.enum.js';
 import { CreateRentMessage } from './create-rent.message.js';
+import { RentDtoConst } from './rent-dto.const.js';
 
 export class UpdateRentDto {
-  @MinLength(10, {message: CreateRentMessage.title.minLength})
-  @MaxLength(100, {message: CreateRentMessage.title.maxLength})
+  @MinLength(RentDtoConst.MinLengthTitle, {message: CreateRentMessage.title.minLength})
+  @MaxLength(RentDtoConst.MaxLengthTitle, {message: CreateRentMessage.title.maxLength})
   @IsOptional()
   public title?: string;
 
-  @MinLength(20, {message: CreateRentMessage.description.minLength})
-  @MaxLength(1024, {message: CreateRentMessage.description.maxLength})
+  @MinLength(RentDtoConst.MinLengthDescription, {message: CreateRentMessage.description.minLength})
+  @MaxLength(RentDtoConst.MaxLengthDescription, {message: CreateRentMessage.description.maxLength})
   @IsOptional()
   public description?: string;
 
@@ -33,18 +34,18 @@ export class UpdateRentDto {
   @IsOptional()
   public type?: Type;
 
-  @Min(1, {message: CreateRentMessage.bedrooms.min})
-  @Max(8, {message: CreateRentMessage.bedrooms.max})
+  @Min(RentDtoConst.MinBedrooms, {message: CreateRentMessage.bedrooms.min})
+  @Max(RentDtoConst.MaxBedrooms, {message: CreateRentMessage.bedrooms.max})
   @IsOptional()
   public bedrooms?: number;
 
-  @Min(1, {message: CreateRentMessage.maxAdults.min})
-  @Max(10, {message: CreateRentMessage.maxAdults.max})
+  @Min(RentDtoConst.MinMaxAdults, {message: CreateRentMessage.maxAdults.min})
+  @Max(RentDtoConst.MaxMaxAdults, {message: CreateRentMessage.maxAdults.max})
   @IsOptional()
   public maxAdults?: number;
 
-  @Min(100, {message: CreateRentMessage.price.min})
-  @Max(100000, {message: CreateRentMessage.price.max})
+  @Min(RentDtoConst.MinPrice, {message: CreateRentMessage.price.min})
+  @Max(RentDtoConst.MaxPrice, {message: CreateRentMessage.price.max})
   @IsOptional()
   public price?: number;
 
